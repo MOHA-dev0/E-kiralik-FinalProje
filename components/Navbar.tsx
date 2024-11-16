@@ -15,7 +15,7 @@ function Navbar() {
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center py-4 px-6 md:px-20 lg:px-32">
         <Link href="/">
-          <Image src="/Logo.png" alt="logo" width={150} height={150} />
+          <Image src="/logo.png" alt="logo" width={150} height={150} />
         </Link>
         <ul className="hidden md:flex gap-7 text-gray-700 font-semibold">
           <li>
