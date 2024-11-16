@@ -9,6 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
+
 const isLogedIn = true;
 
 function Navbar() {
@@ -16,7 +17,13 @@ function Navbar() {
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center py-4 px-6 md:px-20 lg:px-32">
         <Link href="/">
-          <Image src="/logo.png" alt="logo" width={120} height={30} />
+          <Image
+            src="/logo.png"
+            alt="logo"
+            width={120}
+            height={30}
+            sizes="(max-width: 600px) 80vw, (max-width: 1200px) 60vw, 30vw"
+          />
         </Link>
         <ul className="hidden md:flex gap-7 text-gray-700 font-semibold">
           <li>
