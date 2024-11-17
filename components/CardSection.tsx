@@ -7,12 +7,10 @@ const CardSection = () => {
       {/* Kart Bölümü ShadCN Kullanılarak */}
       <section className="bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto px-6">
-          {/* قسم الزخرفة أو الفصل الجمالي */}
           <div className="flex justify-center items-center mb-16">
             <div className="relative">
-              {/* زخرفة دائرية في الخلفية */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-400 rounded-full w-32 h-32 opacity-20 blur-lg"></div>
-              {/* المحتوى النصي */}
+
               <div className="relative z-10 text-center">
                 <h2 className="text-3xl font-extrabold text-gray-800">
                   Sizin için Tasarlandı
@@ -24,11 +22,10 @@ const CardSection = () => {
             </div>
           </div>
 
-          {/* الكروت */}
+          {/* cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {/* البطاقة 1 */}
+            {/* card 1 */}
             <Card className="relative rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden group">
-              {/* تأثير الخلفية */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-green-300 opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <CardHeader className="relative z-10">
                 <CardTitle className="text-lg font-semibold text-gray-800">

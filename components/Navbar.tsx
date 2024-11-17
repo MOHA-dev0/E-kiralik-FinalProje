@@ -11,21 +11,21 @@ import {
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
 
-const isLogedIn = true;
-
 function Navbar() {
+  const isLogedIn = true;
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center py-4 px-6 md:px-20 lg:px-32">
-        <Link href="/">
-          <Image
-            src={logo}
-            alt="logo"
-            width={120}
-            height={30}
-            sizes="(max-width: 600px) 80vw, (max-width: 1200px) 60vw, 30vw"
-          />
-        </Link>
+        <div className=" relative w-[100px]  aspect-square">
+          <Link href="/">
+            <Image
+              src={logo}
+              alt="logo"
+              fill
+              className=" object-center object-contain "
+            />
+          </Link>
+        </div>
         <ul className="hidden md:flex gap-7 text-gray-700 font-semibold">
           <li>
             <Link
@@ -52,7 +52,7 @@ function Navbar() {
                 <DropdownMenuTrigger>
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src="/avatar.jpg"
+                      src=""
                       alt="avatar"
                       className="rounded-full w-12 h-12 border-2 border-gray-200"
                     />
