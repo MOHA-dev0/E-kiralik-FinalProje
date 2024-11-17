@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import logo from "@/public/logo.png";
 import { Bell } from "lucide-react";
 import {
   DropdownMenu,
@@ -18,7 +19,7 @@ function Navbar() {
       <div className="container mx-auto flex justify-between items-center py-4 px-6 md:px-20 lg:px-32">
         <Link href="/">
           <Image
-            src="/logo.png"
+            src={logo}
             alt="logo"
             width={120}
             height={30}
