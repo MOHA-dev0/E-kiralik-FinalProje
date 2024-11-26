@@ -1,22 +1,37 @@
-import * as React from "react"
+// components/ui/input.tsx
+import React from "react";
 
-import { cn } from "@/lib/utils"
+interface InputProps {
+  label: string;
+  name: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
+}
 
-const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, type, ...props }, ref) => {
-    return (
+export const Input = ({
+  label,
+  name,
+  type = "text",
+  value,
+  onChange,
+  required,
+}: InputProps) => {
+  return (
+    <div className="mb-4">
+      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+        {label}
+      </label>
       <input
+        id={name}
+        name={name}
         type={type}
-        className={cn(
-          "flex h-9 w-full rounded-md border border-slate-200 bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-slate-950 placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dark:border-slate-800 dark:file:text-slate-50 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300",
-          className
-        )}
-        ref={ref}
-        {...props}
+        value={value}
+        onChange={onChange}
+        required={required}
+        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
-    )
-  }
-)
-Input.displayName = "Input"
-
-export { Input }
+    </div>
+  );
+};

@@ -1,3 +1,4 @@
+// lib/auth.ts
 import { sanityClient } from "@/sanity/lib/sanity";
 import CredentialsProvider from "next-auth/providers/credentials";
 

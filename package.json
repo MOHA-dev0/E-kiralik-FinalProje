@@ -32,6 +32,7 @@
     "next-sanity": "^9.8.15",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-toastify": "^10.0.6",
     "sanity": "^3.64.1",
     "styled-components": "^6.1.13",
     "tailwind-merge": "^2.5.4",

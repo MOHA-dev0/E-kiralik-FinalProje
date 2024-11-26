@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import logo from "@/public/logo.png";
-import { Bell } from "lucide-react";
+import { Bell, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -58,13 +58,8 @@ function Navbar() {
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar className="cursor-pointer">
-                    <AvatarImage
-                      src={session?.user?.image || ""}
-                      alt="avatar"
-                      className="rounded-full w-12 h-12 border-2 border-gray-200"
-                    />
                     <AvatarFallback className="bg-gray-500 text-white rounded-full w-12 h-12 flex items-center justify-center">
-                      {session?.user?.name} {/* عرض الحرف الأول من الاسم */}
+                      <User />
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
@@ -72,7 +67,7 @@ function Navbar() {
                   {/* رسالة الترحيب */}
                   <DropdownMenuItem className="group flex items-center p-2 hover:bg-gray-100 transition-colors duration-300 cursor-default">
                     <span className="ml-2 text-gray-700 group-hover:text-gray-900">
-                      Welcome, {session?.user?.name || "User"}
+                      Welcome, {session?.user?.username || "User"}
                     </span>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="group flex items-center p-2 hover:bg-gray-100 transition-colors duration-300">
@@ -98,8 +93,10 @@ function Navbar() {
             </>
           ) : (
             <>
-              <Button className="px-8 py-2 rounded-full">Sign Up</Button>
-              <Link href="/api/auth/signin">
+              <Link href="/auth/signup">
+                <Button className="px-8 py-2 rounded-full">Sign Up</Button>
+              </Link>
+              <Link href="/auth/signin">
                 <Button className="px-8 py-2 rounded-full">Login</Button>
               </Link>
             </>
