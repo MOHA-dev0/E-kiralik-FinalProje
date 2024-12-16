@@ -13,7 +13,6 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // تحقق من رقم الـ TC وكلمة المرور في Sanity
         const user = await sanityClient.fetch(
           `*[_type == "user" && tc == $tc && password == $password][0]`,
           {
@@ -24,12 +23,13 @@ export const authOptions = {
 
         if (user) {
           return {
-            id: user._id,
-            username: user.username, // تضمين اسم المستخدم
-            isLandlord: user.isLandlord, // تضمين دور المستخدم
+            id: user._id || user.tc, // تأكد من تضمين id (أو استخدم tc كمعرف فريد إذا لم يكن هناك id)
+            tc: user.tc,
+            username: user.username,
+            isLandlord: user.isLandlord,
           };
         } else {
-          return null; // إذا لم يتم العثور على المستخدم
+          return null; // إذا لم يتم العثور على المستخدم // إذا لم يتم العثور على المستخدم
         }
       },
     }),
@@ -40,19 +40,22 @@ export const authOptions = {
   },
   callbacks: {
     async jwt({ token, user }: { token: any; user: any }) {
-      // إضافة بيانات المستخدم إلى التوكن
       if (user) {
+        token.id = user.id; // إضافة id إلى التوكن
+        token.tc = user.tc;
+        token.username = user.username;
         token.isLandlord = user.isLandlord;
-        token.username = user.username; // تضمين اسم المستخدم
       }
       return token;
     },
     async session({ session, token }: { session: any; token: any }) {
-      // إضافة بيانات المستخدم إلى الجلسة
+      session.user.id = token.id; // تضمين id في الجلسة
+      session.user.tc = token.tc;
+      session.user.username = token.username;
       session.user.isLandlord = token.isLandlord;
-      session.user.username = token.username; // تضمين اسم المستخدم
       return session;
     },
   },
+
   secret: process.env.NEXTAUTH_SECRET, // تأكد من أن لديك NEXTAUTH_SECRET في ملف .env
 };
