@@ -4,7 +4,6 @@ import SecondSection from "@/components/SecondSection";
 export default function Home() {
   return (
     <>
-      {/* Header Bölümü */}
       <section className="w-full bg-gradient-to-r from-blue-500 to-green-400 min-h-[530px] flex justify-center items-center flex-col py-20 px-6 mb-16 relative">
         <div className="relative bg-black bg-opacity-50 p-6 rounded-lg shadow-md mx-3">
           <h1 className="uppercase font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center relative z-10">
@@ -17,7 +16,7 @@ export default function Home() {
           anlaşmazlıkları ortadan kaldırarak، işlem süreçlerini daha şeffaf ve
           güvenilir hale getirir.
         </p>
-        {/* "Neden E-Kiralık?" Başlığı Header ile Bütünleşik */}
+
         <div className="absolute bottom-[-30px] bg-white px-6 py-3 rounded-lg shadow-md text-green-900 text-3xl font-semibold">
           Neden E-Kiralık?
         </div>

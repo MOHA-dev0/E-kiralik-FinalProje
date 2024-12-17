@@ -2,62 +2,124 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ShieldAlert } from "lucide-react";
-import { UserRoundPlus } from "lucide-react";
+import { UserRoundPlus, ShieldAlert } from "lucide-react"; // استيراد الأيقونات
 
-// Sanity
+// Sanity import
 import { client } from "@/sanity/lib/client";
-import { GET_OWNED_HOMES_QUERY } from "@/sanity/lib/queries";
+import {
+  GET_OWNED_HOMES_QUERY,
+  GET_RENTED_HOMES_QUERY,
+} from "@/sanity/lib/queries";
+import { useSession } from "next-auth/react";
+
+// استيراد النموذج
+import ESozlesmeForm from "@/components/userUi/EsozlesmseForm";
 
 const CardSection = () => {
   const params = useParams(); // Get dynamic route parameter
+  const { data: session } = useSession();
+  const [homes, setHomes] = useState<Home[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [showModal, setShowModal] = useState<boolean>(false); // حالة لعرض الـ modal
+
   interface Home {
     _id: string;
     owner_id?: {
       username: string;
     };
+    tenant_id?: {
+      username: string;
+    };
     location: string;
   }
 
-  const [ownedHomes, setOwnedHomes] = useState<Home[]>([]);
-
   useEffect(() => {
-    // Fetch the homes
     const fetchHomes = async () => {
-      const data = await client.fetch(GET_OWNED_HOMES_QUERY, {
-        owner: params.id,
-      });
-
-      setOwnedHomes(data);
+      if (session?.user.isLandlord) {
+        // إذا كان المستخدم صاحب بيوت، جلب جميع البيوت التي يملكها
+        const data = await client.fetch(GET_OWNED_HOMES_QUERY, {
+          owner: params.id,
+        });
+        setHomes(data);
+      } else {
+        // إذا كان المستخدم مستأجر، جلب البيوت التي هو مستأجر فيها
+        const data = await client.fetch(GET_RENTED_HOMES_QUERY, {
+          tenant_id: session?.user.tc, // أو يمكنك استخدام session?.user.username حسب الحالة
+        });
+        setHomes(data);
+        console.log("Fetched Tenant Homes:", data);
+      }
+      setLoading(false); // إيقاف التحميل
     };
-    fetchHomes();
-  }, [params.id]); // Add params.id as a dependency to re-fetch when the param changes
+
+    if (session) {
+      fetchHomes();
+    }
+  }, [params.id, session]);
+
+  const handleShowModal = () => {
+    setShowModal(true); // عند الضغط على الأيقونة، إظهار الـ modal
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false); // إغلاق الـ modal
+  };
 
   return (
     <>
-      {ownedHomes?.length ? (
-        ownedHomes.map((home) => (
-          <div className="relative ml-4 md:ml-12 lg:ml-22" key={home._id}>
-            <Card className="w-[350px]">
-              <CardHeader className="flex justify-between items-center">
-                <CardTitle>{home.owner_id?.username}</CardTitle>
-                <CardDescription>{home.location}</CardDescription>
-              </CardHeader>
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <ESozlesmeForm />
+        </div>
+      )}
 
-              <CardFooter className="flex justify-end">
-                <UserRoundPlus />
-              </CardFooter>
-            </Card>
-          </div>
-        ))
+      {loading ? (
+        <p>Loading...</p>
+      ) : homes.length ? (
+        <div className="flex flex-wrap gap-4 justify-start">
+          {" "}
+          {/* Flexbox مع تباعد بين الكروت */}
+          {homes.map((home) => (
+            <div className="w-full sm:w-[350px]" key={home._id}>
+              {" "}
+              {/* ضبط العرض على الشاشات الصغيرة والكبيرة */}
+              <Card className="w-full">
+                <CardHeader className="flex flex-col justify-between items-center">
+                  <CardTitle>
+                    {session?.user.isLandlord
+                      ? home.tenant_id
+                        ? `kiraci: ${home.tenant_id.username}` // عرض اسم المستأجر
+                        : "No Tenant"
+                      : `ev sahbi: ${home.owner_id?.username || "No Owner"}`}
+                  </CardTitle>
+                  <CardDescription>{home.location}</CardDescription>
+                </CardHeader>
+                <CardFooter className="flex justify-end">
+                  {session?.user.isLandlord ? (
+                    home.tenant_id ? (
+                      <ShieldAlert className="text-red-500" size={24} /> // إذا كان البيت مستأجرًا
+                    ) : (
+                      <UserRoundPlus
+                        className="text-green-500"
+                        size={24}
+                        onClick={handleShowModal} // عند الضغط، إظهار الـ modal
+                      />
+                    )
+                  ) : (
+                    <ShieldAlert className="text-red-500" size={24} /> // يظهر دائمًا ShieldAlert للمستأجر
+                  )}
+                </CardFooter>
+              </Card>
+            </div>
+          ))}
+        </div>
       ) : (
-        <p>No home</p>
+        <p>No Ev</p>
       )}
     </>
   );

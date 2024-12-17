@@ -12,19 +12,17 @@ const SignInPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // إرسال طلب تسجيل الدخول
     const res = await signIn("credentials", {
       tc,
       password,
-      redirect: false, // عدم التوجيه التلقائي بعد تسجيل الدخول
+      redirect: false,
     });
 
-    // التحقق من نجاح أو فشل عملية تسجيل الدخول
     if (res?.error) {
-      setError("Invalid TC or password."); // تعيين رسالة الخطأ إذا كانت عملية تسجيل الدخول فاشلة
+      // If there is an error
+      setError("Invalid TC or password.");
     } else if (res?.ok) {
-      // إذا كانت عملية تسجيل الدخول ناجحة
-      router.push("/"); // التوجيه إلى الصفحة الرئيسية بعد تسجيل الدخول بنجاح
+      router.push("/");
     }
   };
 

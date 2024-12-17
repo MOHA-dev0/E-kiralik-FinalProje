@@ -39,7 +39,7 @@ const CardSection = () => {
                 </p>
               </CardContent>
             </Card>
-            {/* البطاقة 2 */}
+            {/* card 2 */}
             <Card className="relative rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-green-300 opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <CardHeader className="relative z-10">
@@ -54,7 +54,7 @@ const CardSection = () => {
                 </p>
               </CardContent>
             </Card>
-            {/* البطاقة 3 */}
+            {/* card 3 */}
             <Card className="relative rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-green-300 opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <CardHeader className="relative z-10">
@@ -69,7 +69,7 @@ const CardSection = () => {
                 </p>
               </CardContent>
             </Card>
-            {/* البطاقة 4 */}
+            {/* card 4 */}
             <Card className="relative rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-green-300 opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <CardHeader className="relative z-10">

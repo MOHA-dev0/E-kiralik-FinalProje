@@ -20,20 +20,20 @@ const SignupPage = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // لمنع إعادة تحميل الصفحة
+    e.preventDefault();
     const response = await fetch("/api/auth/signup", {
-      method: "POST", // يجب أن يكون هنا POST وليس GET
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData), // إرسال بيانات التسجيل في الجسم
+      body: JSON.stringify(formData),
     });
 
     if (response.ok) {
-      router.push("/auth/signin"); // بعد التسجيل، إعادة التوجيه إلى صفحة تسجيل الدخول
+      router.push("/auth/signin");
     } else {
       const data = await response.json();
-      setError(data.error || "حدث خطأ في التسجيل");
+      setError(data.error || "Feild to create account");
     }
   };
 
