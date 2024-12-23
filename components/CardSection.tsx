@@ -1,10 +1,10 @@
 import React from "react";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+
 const CardSection = () => {
   return (
     <div>
-      {/* Kart Bölümü ShadCN Kullanılarak */}
       <section className="bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex justify-center items-center mb-16">

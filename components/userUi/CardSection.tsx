@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { UserRoundPlus, ShieldAlert } from "lucide-react"; // استيراد الأيقونات
+import { UserRoundPlus, ShieldAlert } from "lucide-react";
 
 // Sanity import
 import { client } from "@/sanity/lib/client";
@@ -72,11 +72,7 @@ const CardSection = () => {
 
   return (
     <>
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <ESozlesmeForm />
-        </div>
-      )}
+      {showModal && <ESozlesmeForm onClose={handleCloseModal} />}
 
       {loading ? (
         <p>Loading...</p>
@@ -105,7 +101,7 @@ const CardSection = () => {
                       <ShieldAlert className="text-red-500" size={24} /> // إذا كان البيت مستأجرًا
                     ) : (
                       <UserRoundPlus
-                        className="text-green-500"
+                        className="text-green-500 cursor-pointer"
                         size={24}
                         onClick={handleShowModal} // عند الضغط، إظهار الـ modal
                       />

@@ -1,4 +1,3 @@
-// lib/auth.ts
 import { sanityClient } from "@/sanity/lib/sanity";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -29,7 +28,7 @@ export const authOptions = {
             isLandlord: user.isLandlord,
           };
         } else {
-          return null; // إذا لم يتم العثور على المستخدم // إذا لم يتم العثور على المستخدم
+          return null; // إذا لم يتم العثور على المستخدم
         }
       },
     }),
@@ -39,6 +38,7 @@ export const authOptions = {
     error: "/auth/error", // تخصيص صفحة الخطأ
   },
   callbacks: {
+    // تأكد من أن الـ JWT يحتوي على الـ id والـ tc والـ username والـ isLandlord
     async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
         token.id = user.id; // إضافة id إلى التوكن
@@ -48,6 +48,7 @@ export const authOptions = {
       }
       return token;
     },
+    // تضمين الـ id في الجلسة
     async session({ session, token }: { session: any; token: any }) {
       session.user.id = token.id; // تضمين id في الجلسة
       session.user.tc = token.tc;

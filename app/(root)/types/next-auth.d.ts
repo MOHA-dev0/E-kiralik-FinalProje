@@ -4,15 +4,17 @@ declare module "next-auth" {
   interface Session {
     user: {
       name?: string | null;
-      username?: string; // إضافة الحقل المخصص
-      isLandlord?: boolean; // إضافة الحقل المخصص
+      username?: string;
+      isLandlord?: boolean;
       tc?: string;
+      id?: string; // إضافة الحقل المخصص id
     };
   }
 
   interface User {
+    id: string; // إضافة الحقل المخصص id
     tc: string;
-    username: string; // الحقل المخصص
-    isLandlord: boolean; // الحقل المخصص
+    username: string;
+    isLandlord: boolean;
   }
 }
