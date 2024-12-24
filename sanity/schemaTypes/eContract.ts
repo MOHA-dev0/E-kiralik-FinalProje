@@ -6,16 +6,13 @@ export default {
   type: "document", // نوع الـ Schema
   fields: [
     {
-      name: "kiraciKimligi",
+      name: "tenant_id",
       title: "Tenant ID (Kiracı Kimliği)",
-      type: "string",
-      description: "Turkish ID of the tenant.",
+      type: "reference",
+      to: [{ type: "user" }],
+      description: "Reference to the Tenant by their Turkish ID.",
       validation: (Rule: Rule) =>
-        Rule.required()
-          .min(11)
-          .max(11)
-          .regex(/^\d+$/, { name: "numeric", invert: false })
-          .error("Kiracı Kimliği must be exactly 11 digits."),
+        Rule.required().error("Tenant ID is required."),
     },
     {
       name: "girisTarihi",

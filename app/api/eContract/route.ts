@@ -7,8 +7,8 @@ export async function POST(req: Request) {
     console.log("Received contract data:", body);
 
     const {
-      owner_id, // match frontend field name
-      kiraciKimligi, // match frontend field name
+      owner_id,
+      kiraciKimligi,
       girisTarihi,
       kiraTutari,
       komisyonTutari,
@@ -17,7 +17,6 @@ export async function POST(req: Request) {
       anlasmaKosullari,
     } = body;
 
-    // Check if any required fields are missing
     if (
       !owner_id ||
       !kiraciKimligi ||
@@ -34,38 +33,54 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if the tenant exists in the "user" schema
-    const tenantExists = await sanityClient.fetch(
-      `*[_type == "user" && tc == $tc][0]._id`,
+    // التحقق من وجود المستأجر
+    const tenant = await sanityClient.fetch(
+      `*[_type == "user" && tc == $tc][0]`,
       { tc: kiraciKimligi }
     );
 
-    if (!tenantExists) {
+    if (!tenant) {
       return NextResponse.json(
         { error: "Kiracı Kimliği'ne ait bir kullanıcı bulunamadı." },
         { status: 404 }
       );
     }
 
-    // Create Sanity document
+    // إنشاء وثيقة العقد
     const document = {
       _type: "eContract",
       owner_id: { _type: "reference", _ref: owner_id },
-      tenant_id: { _type: "reference", _ref: tenantExists }, // Use the valid reference
+      tenant_id: { _type: "reference", _ref: tenant._id },
       girisTarihi,
-      kiraTutari,
-      komisyonTutari,
-      sozlesmeSuresi,
+      kiraTutari: parseFloat(kiraTutari),
+      komisyonTutari: parseFloat(komisyonTutari),
+      sozlesmeSuresi: parseInt(sozlesmeSuresi, 10),
       evEsyaliMi,
       anlasmaKosullari,
     };
 
-    // Create document in Sanity
-    const response = await sanityClient.create(document);
+    const contractResponse = await sanityClient.create(document);
+    console.log("Contract created:", contractResponse);
+
+    const notification = {
+      _key: crypto.randomUUID(), // مفتاح فريد للإشعار
+      message: "لديك طلب جديد للسكن. الرجاء مراجعة العقد.",
+      status: "unread",
+      date: new Date().toISOString(),
+      idhome: contractResponse._id, // إضافة ID البيت من العقد
+    };
+
+    const updateResponse = await sanityClient
+      .patch(tenant._id)
+      .setIfMissing({ notifications: [] }) // إذا لم تكن الإشعارات موجودة، يتم إنشاؤها
+      .insert("after", "notifications[-1]", [notification]) // إضافة الإشعار إلى نهاية القائمة
+      .commit();
+
+    console.log("Notification added:", updateResponse);
 
     return NextResponse.json({
-      message: "Sözleşme başarıyla kaydedildi.",
-      data: response,
+      message: "Sözleşme başarıyla kaydedildi ve bildirim gönderildi.",
+      data: contractResponse,
     });
   } catch (error) {
     console.error("Hata oluştu:", error);

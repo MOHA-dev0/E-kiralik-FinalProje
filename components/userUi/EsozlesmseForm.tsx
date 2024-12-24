@@ -136,7 +136,49 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose }) => {
               />
             </div>
 
-            {/* باقي الحقول في النموذج */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Komisyon Tutarı
+              </label>
+              <input
+                type="number"
+                name="komisyonTutari"
+                value={formData.komisyonTutari}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="Komisyon tutarı girin"
+                pattern="[0-9]*"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Sözleşme Süresi (ay)
+              </label>
+              <input
+                type="number"
+                name="sozlesmeSuresi"
+                value={formData.sozlesmeSuresi}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="Ay sayısı girin"
+                pattern="[0-9]*"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Ev Eşyalı mı?
+              </label>
+              <input
+                type="text"
+                name="evEsyaliMi"
+                placeholder="Evet / Hayır"
+                value={formData.evEsyaliMi}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
           </div>
 
           {/* textarea */}
