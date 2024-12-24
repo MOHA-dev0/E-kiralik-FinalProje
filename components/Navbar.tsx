@@ -122,34 +122,7 @@ function Navbar() {
                 onClick={toggleNotifications} // عند الضغط على الجرس
               />
               {/* نافذة الإشعارات */}
-              {isOpen && (
-                <div className="absolute top-14 right-0 w-72 p-4 bg-white shadow-lg rounded-md">
-                  <h2 className="text-lg font-semibold mb-2">الإشعارات</h2>
-                  <ul>
-                    {notifications.length === 0 ? (
-                      <li>لا توجد إشعارات جديدة</li>
-                    ) : (
-                      notifications.map((notif, index) => (
-                        <li
-                          key={index}
-                          className={`p-2 mb-2 border-b ${notif.status === "unread" ? "bg-gray-100" : ""}`}
-                        >
-                          <p>{notif.message}</p>
-                          <small>{new Date(notif.date).toLocaleString()}</small>
-                          {notif.status === "unread" && (
-                            <button
-                              onClick={() => markAsRead(index)}
-                              className="ml-2 text-blue-500"
-                            >
-                              تم القراءة
-                            </button>
-                          )}
-                        </li>
-                      ))
-                    )}
-                  </ul>
-                </div>
-              )}
+              {isOpen && <Notifications />}
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar className="cursor-pointer">

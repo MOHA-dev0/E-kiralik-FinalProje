@@ -64,7 +64,8 @@ export async function POST(req: Request) {
 
     const notification = {
       _key: crypto.randomUUID(), // مفتاح فريد للإشعار
-      message: "لديك طلب جديد للسكن. الرجاء مراجعة العقد.",
+      message:
+        "Konut için yeni bir başvurunuz var. Lütfen sözleşmeyi inceleyin.",
       status: "unread",
       date: new Date().toISOString(),
       idhome: contractResponse._id, // إضافة ID البيت من العقد
