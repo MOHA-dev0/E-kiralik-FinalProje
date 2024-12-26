@@ -4,6 +4,8 @@ import { client } from "@/sanity/lib/client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation"; // استخدم useParams للحصول على المعلمات من الرابط
 import ShinyButton from "@/components/ui/shiny-button";
+import { GET_ECONTRACTS_QUERY } from "@/sanity/lib/queries";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const ContractDetails = () => {
   const { data: session } = useSession();
@@ -13,10 +15,7 @@ const ContractDetails = () => {
   useEffect(() => {
     if (id && session) {
       const fetchContract = async () => {
-        const data = await client.fetch(
-          `*[_type == "eContract" && _id == $id][0]`,
-          { id }
-        );
+        const data = await client.fetch(GET_ECONTRACTS_QUERY, { id });
         setContract(data);
       };
 
@@ -25,6 +24,13 @@ const ContractDetails = () => {
   }, [id, session]);
 
   if (!contract) return <div>Loading...</div>;
+
+  function handleClicked() {
+    const click =
+      "text-white bg-white px-5 py-5 w-[200px] flex justify-center items-center mx-auto mt-8 disabled:cursor-not-allowed disabled:opacity-50";
+
+    return;
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
@@ -38,7 +44,7 @@ const ContractDetails = () => {
               malik Kimliği
             </label>
             <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-              {contract?.kiraciKimligi}
+              {contract?.owner_id?.tc}
             </div>
           </div>
 
@@ -83,7 +89,7 @@ const ContractDetails = () => {
               Ev Eşyalı mı?
             </label>
             <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-              {contract?.evEsyali}
+              {contract?.evEsyaliMi ? "evet" : "hayır"}
             </div>
           </div>
         </div>
@@ -98,9 +104,25 @@ const ContractDetails = () => {
           </div>
         </div>
 
+        <div className="mt-4 mx-auto items-top flex space-x-2">
+          <Checkbox />
+          <div className="grid gap-1.5 leading-none">
+            <label
+              htmlFor="terms1"
+              className="text-sm font-medium leading-none "
+            >
+              Accept terms and conditions
+            </label>
+            <p className="text-sm text-muted-foreground">
+              You agree to our Terms of Service and Privacy Policy.
+            </p>
+          </div>
+        </div>
+
         <ShinyButton
+          disabled
           type="submit"
-          className="text-white bg-white px-5 py-5 w-[200px] flex justify-center items-center mx-auto"
+          className="text-white bg-white px-5 py-5 w-[200px] flex justify-center items-center mx-auto mt-8 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Kabul Ediyourum
         </ShinyButton>

@@ -29,3 +29,19 @@ export const GET_RENTED_HOMES_QUERY = defineQuery(
         }
     }`
 );
+
+export const GET_ECONTRACTS_QUERY = defineQuery(
+  `*[_type == "eContract" && _id == $id][0]{
+  girisTarihi,
+  komisyonTutari,
+    kiraTutari,
+    sozlesmeSuresi,
+    evEsyaliMi,
+    anlasmaKosullari,
+    owner_id->{
+      tc,
+      username,
+    }
+    
+}`
+);
