@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 const Notifications = () => {
   const { data: session } = useSession();
   interface Notification {
+    idhome: string;
     message: string;
     date: string;
     status: string;
@@ -33,6 +34,7 @@ const Notifications = () => {
       try {
         await client
           .patch(session.user.id)
+          .setIfMissing({ notifications: [] })
           .set({ notifications: updatedNotifications })
           .commit();
         setNotifications(updatedNotifications);
@@ -62,13 +64,13 @@ const Notifications = () => {
                   {new Date(notif.date).toLocaleString()}
                 </small>
               </div>
-              {notif.status === "unread" && (
-                <button
-                  onClick={() => markAsRead(index)}
+              {notif.idhome && (
+                <a
+                  href={`/contract/${notif.idhome}`}
                   className="bg-blue-500 text-white text-sm px-4 py-2 rounded-xl transition-all duration-200 hover:bg-blue-600"
                 >
-                  Okuma tamamlandı
-                </button>
+                  عرض العقد
+                </a>
               )}
             </div>
           </li>

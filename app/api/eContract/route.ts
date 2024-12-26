@@ -63,21 +63,19 @@ export async function POST(req: Request) {
     console.log("Contract created:", contractResponse);
 
     const notification = {
-      _key: crypto.randomUUID(), // مفتاح فريد للإشعار
+      _key: crypto.randomUUID(),
       message:
         "Konut için yeni bir başvurunuz var. Lütfen sözleşmeyi inceleyin.",
       status: "unread",
       date: new Date().toISOString(),
-      idhome: contractResponse._id, // إضافة ID البيت من العقد
+      idhome: contractResponse._id,
     };
 
-    const updateResponse = await sanityClient
+    await sanityClient
       .patch(tenant._id)
-      .setIfMissing({ notifications: [] }) // إذا لم تكن الإشعارات موجودة، يتم إنشاؤها
-      .insert("after", "notifications[-1]", [notification]) // إضافة الإشعار إلى نهاية القائمة
+      .setIfMissing({ notifications: [] })
+      .insert("after", "notifications[-1]", [notification])
       .commit();
-
-    console.log("Notification added:", updateResponse);
 
     return NextResponse.json({
       message: "Sözleşme başarıyla kaydedildi ve bildirim gönderildi.",

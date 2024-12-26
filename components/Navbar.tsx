@@ -12,17 +12,14 @@ import {
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import Notifications from "./userUi/Notifications";
-import { client } from "@/sanity/lib/client";
 import { ReactNode } from "react";
 
 function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isOpen, setIsOpen] = useState(false); // حالة لتحديد إذا كانت نافذة الإشعارات مفتوحة
 
   interface Notification {
@@ -32,51 +29,10 @@ function Navbar() {
     // Add other properties of the notification object here
   }
 
-  // جلب الإشعارات من Sanity
-  useEffect(() => {
-    if (session) {
-      const fetchNotifications = async () => {
-        const data = await client.fetch(
-          `*[_type == "user" && _id == $id][0].notifications`,
-          { id: session.user.id }
-        );
-        setNotifications(data || []);
-      };
-      fetchNotifications();
-    }
-  }, [session]);
-
-  // تغيير حالة الإشعار إلى "تمت قراءته"
-  const markAsRead = async (index: number) => {
-    const updatedNotifications = [...notifications];
-    updatedNotifications[index].status = "read";
-
-    if (session?.user?.id) {
-      try {
-        await client
-          .patch(session.user.id)
-          .set({ notifications: updatedNotifications })
-          .commit();
-        setNotifications(updatedNotifications);
-      } catch (error) {
-        console.error("Error updating notifications:", error);
-      }
-    }
-  };
-
   // دالة لفتح أو إغلاق نافذة الإشعارات
   const toggleNotifications = () => {
     setIsOpen(!isOpen);
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
