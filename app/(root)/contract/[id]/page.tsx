@@ -11,6 +11,7 @@ const ContractDetails = () => {
   const { data: session } = useSession();
   const [contract, setContract] = useState<any>(null);
   const { id } = useParams(); // استخدام useParams بدلاً من useRouter للحصول على الـ id من الرابط
+  const [isChecked, setIsChecked] = useState(false); // حالة تتبع تفعيل الـ Checkbox
 
   useEffect(() => {
     if (id && session) {
@@ -25,13 +26,52 @@ const ContractDetails = () => {
 
   if (!contract) return <div>Loading...</div>;
 
-  function handleClicked() {
-    const click =
-      "text-white bg-white px-5 py-5 w-[200px] flex justify-center items-center mx-auto mt-8 disabled:cursor-not-allowed disabled:opacity-50";
+  // معالج لتغيير حالة الـ Checkbox
+  const handleCheckboxChange = (checked: boolean) => {
+    setIsChecked(checked); // تحديث حالة الـ Checkbox بناءً على قيمة الـ checked
+  };
 
-    return;
-  }
+  const handleAcceptContract = async () => {
+    if (isChecked) {
+      if (!session?.user?.tc || !contract?._id || !contract?.home_id?._id) {
+        console.error(
+          "Missing required data for contract acceptance",
+          session?.user?.tc,
+          contract?._id,
+          contract?.home_id?._id
+        );
+        alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+        return;
+      }
 
+      try {
+        const response = await fetch("/api/eContract/accept", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            kiraciKimligi: session.user.tc,
+            contractId: contract._id,
+            homeId: contract.home_id?._id,
+          }),
+        });
+
+        const result = await response.json();
+        if (response.ok && result.message) {
+          alert("Sözleşme başarıyla kabul edildi.");
+        } else {
+          console.log("Error response:", result);
+          alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+        }
+      } catch (error) {
+        console.error("Error during contract acceptance:", error);
+        alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+      }
+    } else {
+      alert("Lütfen sözleşme şartlarını kabul edin.");
+    }
+  };
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
       <div className="bg-white bg-opacity-80 shadow-2xl rounded-xl max-w-full sm:max-w-3xl w-full p-4 sm:p-8 relative border-4 border-black ">
@@ -105,7 +145,10 @@ const ContractDetails = () => {
         </div>
 
         <div className="mt-4 mx-auto items-top flex space-x-2">
-          <Checkbox />
+          <Checkbox
+            checked={isChecked} // حدد الـ Checkbox بناءً على حالة isChecked
+            onCheckedChange={handleCheckboxChange} // تغيير الحالة عند التفاعل مع الـ Checkbox
+          />
           <div className="grid gap-1.5 leading-none">
             <label
               htmlFor="terms1"
@@ -120,9 +163,10 @@ const ContractDetails = () => {
         </div>
 
         <ShinyButton
-          disabled
+          disabled={!isChecked} // الزر غير مفعل إذا لم يكن الـ Checkbox محددًا
+          onClick={handleAcceptContract}
           type="submit"
-          className="text-white bg-white px-5 py-5 w-[200px] flex justify-center items-center mx-auto mt-8 disabled:cursor-not-allowed disabled:opacity-50"
+          className="text-white bg-white px-5 py-5 w-[200px] flex justify-center items-center mx-auto mt-8 disabled:opacity-50"
         >
           Kabul Ediyourum
         </ShinyButton>

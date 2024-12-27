@@ -1,3 +1,7 @@
+// conponents/userUi/EsozlesmseForm.tsx
+
+// لازم نشتغل انو لمن يضغط على فتح انشاء العقد نسحب ايدي البيت مشان نربطه فيه وننشتغل ع موضوع
+
 import React, { useState } from "react";
 import ShinyButton from "@/components/ui/shiny-button";
 import { useSession } from "next-auth/react";

@@ -78,5 +78,13 @@ export default {
       validation: (Rule: Rule) =>
         Rule.required().error("Owner ID is required."),
     },
+    {
+      name: "home_id", // إضافة مرجع للمنزل
+      title: "Home ID (Ev ID)",
+      type: "reference", // مرجع إلى الـ Schema `home`
+      to: [{ type: "home" }], // ربطه بـ `home`
+      description: "Reference to the home document.",
+      validation: (Rule: Rule) => Rule.required().error("Home ID is required."),
+    },
   ],
 };

@@ -12,22 +12,14 @@ import {
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
-import {useState } from "react";
+import { useState } from "react";
 import Notifications from "./userUi/Notifications";
-import { ReactNode } from "react";
 
 function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false); // حالة لتحديد إذا كانت نافذة الإشعارات مفتوحة
-
-  interface Notification {
-    date: string | number | Date;
-    message: ReactNode | Iterable<ReactNode>;
-    status: string;
-    // Add other properties of the notification object here
-  }
 
   // دالة لفتح أو إغلاق نافذة الإشعارات
   const toggleNotifications = () => {

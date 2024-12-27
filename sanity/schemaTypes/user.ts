@@ -50,6 +50,7 @@ export default {
         },
       ],
     },
+
     {
       name: "password",
       title: "Password",

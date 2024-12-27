@@ -32,8 +32,9 @@ export const GET_RENTED_HOMES_QUERY = defineQuery(
 
 export const GET_ECONTRACTS_QUERY = defineQuery(
   `*[_type == "eContract" && _id == $id][0]{
-  girisTarihi,
-  komisyonTutari,
+    _id,
+    girisTarihi,
+    komisyonTutari,
     kiraTutari,
     sozlesmeSuresi,
     evEsyaliMi,
@@ -41,7 +42,9 @@ export const GET_ECONTRACTS_QUERY = defineQuery(
     owner_id->{
       tc,
       username,
+    },
+    home_id->{
+      _id,
     }
-    
-}`
+  }`
 );

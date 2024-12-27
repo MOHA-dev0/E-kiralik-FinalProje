@@ -1,4 +1,3 @@
-// app/api/auth/signup/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { sanityClient } from "@/sanity/lib/sanity";
 
@@ -20,7 +19,7 @@ export async function POST(req: NextRequest) {
     }
 
     // إضافة المستخدم الجديد إلى قاعدة البيانات
-    await sanityClient.create({
+    const newUser = await sanityClient.create({
       _type: "user",
       username,
       email,
@@ -30,10 +29,11 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "تم إنشاء الحساب بنجاح" },
+      { message: "تم إنشاء الحساب بنجاح", user: newUser },
       { status: 201 }
     );
   } catch (error) {
+    console.error("Error during signup:", error); // تسجيل الخطأ للتصحيح
     return NextResponse.json(
       { error: "حدث خطأ أثناء التسجيل" },
       { status: 500 }

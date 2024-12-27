@@ -4,7 +4,6 @@ import { sanityClient } from "@/sanity/lib/sanity";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log("Received contract data:", body);
 
     const {
       owner_id,
@@ -33,7 +32,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // التحقق من وجود المستأجر
     const tenant = await sanityClient.fetch(
       `*[_type == "user" && tc == $tc][0]`,
       { tc: kiraciKimligi }
@@ -60,22 +58,31 @@ export async function POST(req: Request) {
     };
 
     const contractResponse = await sanityClient.create(document);
-    console.log("Contract created:", contractResponse);
 
+    // تحديث الـ home مع المستأجر
+    await sanityClient
+      .patch(contractResponse._id) // تحديث الـ home بناءً على contract id
+      .set({ tenant_id: { _type: "reference", _ref: tenant._id } })
+      .commit();
+
+    // إرسال إشعار للمستأجر
     const notification = {
       _key: crypto.randomUUID(),
-      message:
-        "Konut için yeni bir başvurunuz var. Lütfen sözleşmeyi inceleyin.",
+      message: "Yeni bir konut başvurusu var. Lütfen sözleşmeyi inceleyin.",
       status: "unread",
       date: new Date().toISOString(),
       idhome: contractResponse._id,
     };
 
-    await sanityClient
-      .patch(tenant._id)
-      .setIfMissing({ notifications: [] })
-      .insert("after", "notifications[-1]", [notification])
-      .commit();
+    try {
+      await sanityClient
+        .patch(tenant._id)
+        .setIfMissing({ notifications: [] })
+        .insert("after", "notifications[-1]", [notification])
+        .commit({ autoGenerateArrayKeys: true });
+    } catch (error) {
+      console.error("Error saving notification:", error);
+    }
 
     return NextResponse.json({
       message: "Sözleşme başarıyla kaydedildi ve bildirim gönderildi.",

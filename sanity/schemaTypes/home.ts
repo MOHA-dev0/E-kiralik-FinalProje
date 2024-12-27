@@ -21,10 +21,10 @@ export default {
     },
     {
       name: "tenant_id",
-      title: "Tenant TC (Kimlik Numarası)", // عنوان الحقل
-      type: "reference", // نوع الحقل مرجع
-      to: [{ type: "user" }], // مرجع إلى الـ User schema بناءً على رقم الـ TC
-      description: "Reference to tenant user by TC (Turkish ID Number)", // وصف الحقل
+      title: "Tenant TC (Kimlik Numarası)",
+      type: "reference",
+      to: [{ type: "user" }],
+      description: "Reference to tenant user by TC (Turkish ID Number)",
     },
   ],
 };
