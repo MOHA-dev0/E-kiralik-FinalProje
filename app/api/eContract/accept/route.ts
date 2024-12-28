@@ -1,63 +1,47 @@
 import { NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client"; // تأكد من أن المسار صحيح
+import { sanityClient } from "@/sanity/lib/sanity";
 
 export async function POST(req: Request) {
   try {
-    const data = await req.json();
-    const { kiraciKimligi, contractId, homeId } = data;
+    const body = await req.json();
 
-    if (!contractId || !homeId || !kiraciKimligi) {
+    const { kiraciKimligi, homeId } = body;
+
+    if (!kiraciKimligi || !homeId) {
       return NextResponse.json(
-        { message: "Contract ID, Home ID, and Tenant TC are required" },
+        { error: "Tüm alanları doldurun." },
         { status: 400 }
       );
     }
 
-    // التحقق من وجود المستأجر في قاعدة البيانات والحصول على الـ _id
-    const tenant = await client.fetch(
-      `*[_type == "user" && tc == $kiraciKimligi][0]`,
-      { kiraciKimligi }
+    // البحث عن المستخدم (المستأجر) باستخدام TC
+    const tenant = await sanityClient.fetch(
+      `*[_type == "user" && tc == $tc][0]`,
+      { tc: kiraciKimligi }
     );
 
     if (!tenant) {
       return NextResponse.json(
-        { message: "Tenant not found in the database" },
+        { error: "Kiracı Kimliği'ne ait bir kullanıcı bulunamadı." },
         { status: 404 }
       );
     }
 
-    // التحقق من وجود المنزل في قاعدة البيانات
-    const home = await client.fetch(`*[_type == "home" && _id == $homeId]`, {
-      homeId,
+    // تحديث الـ home مع tenant_id
+    await sanityClient
+      .patch(homeId)
+      .set({ tenant_id: { _type: "reference", _ref: tenant._id } })
+      .commit();
+
+    return NextResponse.json({
+      message: "Sözleşme başarıyla kabul edildi ve evin kiracısı güncellendi.",
     });
-
-    if (!home) {
-      return NextResponse.json({ message: "Home not found" }, { status: 404 });
-    }
-
-    // إضافة مرجع الـ tenant إلى خانة `tenant_id` في الـ home
-    const updatedHome = await client
-      .patch(homeId) // تحديد ID المنزل
-      .set({
-        tenant_id: { _type: "reference", _ref: tenant.id }, // تعيين الـ _id الخاص بالمستأجر كمرجع
-      })
-      .commit(); // تنفيذ التحديث
-
-    if (updatedHome) {
-      console.log("Tenant reference added to home:", updatedHome); // سجل لتتأكد من النجاح
-      return NextResponse.json(
-        { message: "Tenant reference added successfully" },
-        { status: 200 }
-      );
-    } else {
-      console.error("Failed to add Tenant reference", updatedHome); // سجل الخطأ في حالة الفشل
-      return NextResponse.json(
-        { message: "Failed to add Tenant reference" },
-        { status: 500 }
-      );
-    }
   } catch (error) {
-    console.error("Error during contract acceptance:", error);
-    return NextResponse.json({ message: "An error occurred" }, { status: 500 });
+    console.error("Hata oluştu:", error);
+    return NextResponse.json(
+      { error: "Sözleşme kaydedilirken bir hata oluştu." },
+      { status: 500 }
+    );
   }
 }

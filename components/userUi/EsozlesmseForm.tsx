@@ -9,10 +9,11 @@ import { client } from "@/sanity/lib/client"; // Adjust the import path as neces
 
 interface ESozlesmeFormProps {
   onClose: () => void;
+  homeId: string; // Add the homeId property
 }
 
-const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose }) => {
-  const { data: session, status } = useSession(); // بيانات الجلسة مع حالة الجلسة
+const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
+  const { data: session } = useSession(); // بيانات الجلسة مع حالة الجلسة
   const [formData, setFormData] = useState({
     kiraciKimligi: "",
     girisTarihi: "",
@@ -21,6 +22,7 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose }) => {
     sozlesmeSuresi: "",
     evEsyaliMi: "",
     anlasmaKosullari: "",
+    home_Id: "",
   });
 
   const handleChange = (
@@ -55,6 +57,7 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose }) => {
       ...formData,
       kiraciId, // إضافة id المستأجر هنا
       owner_id: session?.user?.id || "", // إضافة معرف صاحب البيت من الجلسة
+      home_id: homeId, // إضافة معرف البيت هنا
     };
 
     try {
@@ -71,6 +74,8 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose }) => {
         onClose(); // إغلاق النموذج بعد الإرسال
       } else {
         console.error("Hata oluştu:", response.statusText);
+        console.log("Contract Data:", JSON.stringify(contractData));
+
         alert("Sözleşme kaydedilirken bir hata oluştu.");
       }
     } catch (error) {

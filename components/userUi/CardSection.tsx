@@ -26,6 +26,7 @@ const CardSection = () => {
   const [homes, setHomes] = useState<Home[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false); // حالة لعرض الـ modal
+  const [selectedHomeId, setSelectedHomeId] = useState<string | null>(null);
 
   interface Home {
     _id: string;
@@ -62,7 +63,9 @@ const CardSection = () => {
     }
   }, [params.id, session]);
 
-  const handleShowModal = () => {
+  const handleShowModal = (id: string) => {
+    console.log("Selected Home ID:", id);
+    setSelectedHomeId(id);
     setShowModal(true); // عند الضغط على الأيقونة، إظهار الـ modal
   };
 
@@ -72,7 +75,9 @@ const CardSection = () => {
 
   return (
     <>
-      {showModal && <ESozlesmeForm onClose={handleCloseModal} />}
+      {showModal && selectedHomeId && (
+        <ESozlesmeForm onClose={handleCloseModal} homeId={selectedHomeId} />
+      )}
 
       {loading ? (
         <p>Loading...</p>
@@ -103,7 +108,7 @@ const CardSection = () => {
                       <UserRoundPlus
                         className="text-green-500 cursor-pointer"
                         size={24}
-                        onClick={handleShowModal} // عند الضغط، إظهار الـ modal
+                        onClick={() => handleShowModal(home._id)} // إظهار الـ modal عند الضغط
                       />
                     )
                   ) : (

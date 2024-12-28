@@ -14,6 +14,7 @@ export async function POST(req: Request) {
       sozlesmeSuresi,
       evEsyaliMi,
       anlasmaKosullari,
+      home_id,
     } = body;
 
     if (
@@ -24,7 +25,8 @@ export async function POST(req: Request) {
       !komisyonTutari ||
       !sozlesmeSuresi ||
       !evEsyaliMi ||
-      !anlasmaKosullari
+      !anlasmaKosullari ||
+      !home_id
     ) {
       return NextResponse.json(
         { error: "Tüm alanları doldurun." },
@@ -49,6 +51,7 @@ export async function POST(req: Request) {
       _type: "eContract",
       owner_id: { _type: "reference", _ref: owner_id },
       tenant_id: { _type: "reference", _ref: tenant._id },
+      home_id: { _type: "reference", _ref: home_id },
       girisTarihi,
       kiraTutari: parseFloat(kiraTutari),
       komisyonTutari: parseFloat(komisyonTutari),
@@ -61,7 +64,7 @@ export async function POST(req: Request) {
 
     // تحديث الـ home مع المستأجر
     await sanityClient
-      .patch(contractResponse._id) // تحديث الـ home بناءً على contract id
+      .patch(home_id) // تأكد أن التحديث يتم على home_id وليس contract id
       .set({ tenant_id: { _type: "reference", _ref: tenant._id } })
       .commit();
 
@@ -71,7 +74,7 @@ export async function POST(req: Request) {
       message: "Yeni bir konut başvurusu var. Lütfen sözleşmeyi inceleyin.",
       status: "unread",
       date: new Date().toISOString(),
-      idhome: contractResponse._id,
+      idhome: contractResponse._id, // استخدم home_id بدلاً من contractResponse._id
     };
 
     try {
