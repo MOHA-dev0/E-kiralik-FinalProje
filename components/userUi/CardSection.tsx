@@ -80,9 +80,9 @@ const CardSection = () => {
       )}
 
       {loading ? (
-        <p>Loading...</p>
+        <p className="ml-9">Loading...</p>
       ) : homes.length ? (
-        <div className="flex flex-wrap gap-4 justify-start">
+        <div className="flex flex-wrap gap-4 justify-start ml-9">
           {" "}
           {/* Flexbox مع تباعد بين الكروت */}
           {homes.map((home) => (
@@ -103,7 +103,12 @@ const CardSection = () => {
                 <CardFooter className="flex justify-end">
                   {session?.user.isLandlord ? (
                     home.tenant_id ? (
-                      <ShieldAlert className="text-red-500" size={24} /> // إذا كان البيت مستأجرًا
+                      <a href={`/showContract/${home._id}`}>
+                        <ShieldAlert
+                          className="text-red-500 cursor-pointer"
+                          size={24}
+                        />{" "}
+                      </a> // إذا كان البيت مستأجرًا
                     ) : (
                       <UserRoundPlus
                         className="text-green-500 cursor-pointer"
@@ -112,7 +117,12 @@ const CardSection = () => {
                       />
                     )
                   ) : (
-                    <ShieldAlert className="text-red-500" size={24} /> // يظهر دائمًا ShieldAlert للمستأجر
+                    <a href={`/showContract/${home._id}`}>
+                      <ShieldAlert
+                        className="text-red-500 cursor-pointer"
+                        size={24}
+                      />{" "}
+                    </a> // يظهر دائمًا ShieldAlert للمستأجر
                   )}
                 </CardFooter>
               </Card>

@@ -1,7 +1,6 @@
 import { useSession } from "next-auth/react";
 import { client } from "@/sanity/lib/client";
 import { useEffect, useState } from "react";
-import { unstable_after as after } from "next/server";
 const Notifications = () => {
   const { data: session } = useSession();
 
@@ -76,7 +75,7 @@ const Notifications = () => {
   return (
     <div className="fixed top-[80px] right-0 mr-[225px] w-full max-w-lg p-6 bg-white/80 rounded-xl shadow-xl backdrop-blur-md ring-1 ring-black/10 z-50">
       <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-        الإشعارات
+        Bildirimler
       </h2>
       <ul className="space-y-4 max-h-96 overflow-y-auto">
         {notifications.length > 0 ? (
@@ -100,18 +99,20 @@ const Notifications = () => {
                 </div>
                 {notif.idhome && (
                   <a
-                    // href={`/contract/${notif.idhome}`}
-                    className="bg-blue-500 text-white text-sm px-4 py-2 rounded-xl transition-all duration-200 hover:bg-blue-600"
+                    href={`/contract/${notif.idhome}`}
+                    className="bg-blue-500 text-white text-sm px-4 py-2 rounded-xl transition-all duration-200 hover:bg-blue-600 text-center"
                     onClick={() => handleViewContract(notif.idhome)}
                   >
-                    عرض العقد
+                    Sözleşmeyi görüntüle
                   </a>
                 )}
               </div>
             </li>
           ))
         ) : (
-          <p className="text-center text-gray-600">لا توجد إشعارات حالياً.</p>
+          <p className="text-center text-gray-600">
+            Şu anda herhangi bir bildirim yok.
+          </p>
         )}
       </ul>
     </div>

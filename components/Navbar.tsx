@@ -26,6 +26,12 @@ function Navbar() {
     setIsOpen(!isOpen);
   };
 
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push("/");
+    console.log("Signed out");
+  };
+
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center py-1 px-4 md:px-12 lg:px-22">
@@ -81,18 +87,18 @@ function Navbar() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="mt-2 w-48 rounded-xl shadow-lg bg-white/80 backdrop-blur-md ring-1 ring-black/10 cursor-pointer">
                   <DropdownMenuItem className="group flex items-center p-3 hover:bg-purple-100 transition-all duration-300 cursor-default rounded-lg">
-                    <a
-                      href={`/user/${session?.user?.tc}`}
-                      className="ml-4 text-gray-800 group-hover:text-purple-600 font-medium"
-                    >
+                    <a className="ml-4 text-gray-800 group-hover:text-purple-600 font-medium">
                       Welcome, {session?.user?.username || "User"}
                     </a>
                   </DropdownMenuItem>
                   <div className="border-b border-gray-200 my-2"></div>
                   <DropdownMenuItem className="group flex items-center p-3 hover:bg-blue-100 transition-all duration-300 rounded-lg">
-                    <span className="ml-4 text-gray-800 group-hover:text-blue-600 font-medium">
+                    <a
+                      className="ml-4 text-gray-800 group-hover:text-blue-600 font-medium"
+                      href={`/user/${session?.user?.tc}`}
+                    >
                       Profile
-                    </span>
+                    </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="group flex items-center p-3 hover:bg-green-100 transition-all duration-300 rounded-lg">
                     <span className="ml-4 text-gray-800 group-hover:text-green-600 font-medium">
@@ -101,7 +107,7 @@ function Navbar() {
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="group flex items-center p-3 hover:bg-red-100 transition-all duration-300 rounded-lg"
-                    onClick={() => signOut()}
+                    onClick={handleSignOut}
                   >
                     <span className="ml-4 text-gray-800 group-hover:text-red-600 font-medium">
                       Logout
@@ -155,7 +161,7 @@ function Navbar() {
                     </button>
                     <button
                       className="flex items-center gap-2"
-                      onClick={() => signOut()}
+                      onClick={handleSignOut}
                     >
                       <LogOut className="w-5 h-5" />
                     </button>
