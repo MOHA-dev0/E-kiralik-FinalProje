@@ -48,3 +48,9 @@ export const GET_ECONTRACTS_QUERY = defineQuery(
     }
   }`
 );
+
+export const GET_NOTIFICATIONS_QUERY = defineQuery(`
+  *[_type == "user" && tc == $tc] {
+  notifications[idhome == "eLZC6C7gcUre0zGjrpiMq8"]
+  }
+  `);

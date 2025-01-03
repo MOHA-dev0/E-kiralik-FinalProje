@@ -63,10 +63,10 @@ export async function POST(req: Request) {
     const contractResponse = await sanityClient.create(document);
 
     // تحديث الـ home مع المستأجر
-    await sanityClient
-      .patch(home_id) // تأكد أن التحديث يتم على home_id وليس contract id
-      .set({ tenant_id: { _type: "reference", _ref: tenant._id } })
-      .commit();
+    // await sanityClient
+    //   .patch(home_id) // تأكد أن التحديث يتم على home_id وليس contract id
+    //   .set({ tenant_id: { _type: "reference", _ref: tenant._id } })
+    //   .commit();
 
     // إرسال إشعار للمستأجر
     const notification = {

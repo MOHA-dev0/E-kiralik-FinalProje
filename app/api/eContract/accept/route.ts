@@ -14,6 +14,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+    console.log(homeId);
 
     // البحث عن المستخدم (المستأجر) باستخدام TC
     const tenant = await sanityClient.fetch(
@@ -33,6 +34,12 @@ export async function POST(req: Request) {
       .patch(homeId)
       .set({ tenant_id: { _type: "reference", _ref: tenant._id } })
       .commit();
+
+    await sanityClient
+      .patch(tenant._id) // تحديد المستند باستخدام _id
+      .unset([`notifications[_ref == "${homeId}"]`])
+      .commit();
+    console.log(homeId);
 
     return NextResponse.json({
       message: "Sözleşme başarıyla kabul edildi ve evin kiracısı güncellendi.",

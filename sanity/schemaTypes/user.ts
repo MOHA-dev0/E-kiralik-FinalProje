@@ -55,7 +55,7 @@ export default {
       name: "password",
       title: "Password",
       type: "text", // نوع الحقل.
-      hidden: true, // إخفاء الحقل في لوحة التحكم
+      // إخفاء الحقل في لوحة التحكم
     },
     {
       name: "isLandlord",

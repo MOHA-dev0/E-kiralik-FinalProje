@@ -2,7 +2,7 @@
 import { useSession } from "next-auth/react";
 import { client } from "@/sanity/lib/client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation"; // استخدم useParams للحصول على المعلمات من الرابط
+import { useParams, useRouter } from "next/navigation"; // استخدم useParams للحصول على المعلمات من الرابط
 import ShinyButton from "@/components/ui/shiny-button";
 import { GET_ECONTRACTS_QUERY } from "@/sanity/lib/queries";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,6 +12,7 @@ const ContractDetails = () => {
   const [contract, setContract] = useState<any>(null);
   const { id } = useParams(); // استخدام useParams بدلاً من useRouter للحصول على الـ id من الرابط
   const [isChecked, setIsChecked] = useState(false); // حالة تتبع تفعيل الـ Checkbox
+  const router = useRouter();
 
   useEffect(() => {
     if (id && session) {
@@ -60,6 +61,7 @@ const ContractDetails = () => {
         const result = await response.json();
         if (response.ok && result.message) {
           alert("Sözleşme başarıyla kabul edildi.");
+          router.push("/");
         } else {
           console.log("Error response:", result);
           alert("Bir hata oluştu. Lütfen tekrar deneyin.");

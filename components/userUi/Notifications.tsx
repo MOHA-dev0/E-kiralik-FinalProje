@@ -1,14 +1,12 @@
 import { useSession } from "next-auth/react";
 import { client } from "@/sanity/lib/client";
 import { useEffect, useState } from "react";
-
+import { unstable_after as after } from "next/server";
 const Notifications = () => {
   const { data: session } = useSession();
 
-  // تحقق من أن الكود يعمل في بيئة العميل قبل استخدام useRouter
   const [isClient, setIsClient] = useState(false);
 
-  // تعريف هيكل الإشعارات
   interface Notification {
     idhome: string;
     message: string;
@@ -16,12 +14,10 @@ const Notifications = () => {
     status: string;
   }
 
-  // حالة الإشعارات
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  // جلب الإشعارات عند وجود جلسة
   useEffect(() => {
-    setIsClient(true); // تأكد من أن الكود يعمل في العميل فقط
+    setIsClient(true);
   }, []);
 
   useEffect(() => {
@@ -32,7 +28,11 @@ const Notifications = () => {
             `*[_type == "user" && _id == $id][0].notifications`,
             { id: session.user.id }
           );
-          setNotifications(data || []);
+          // فلترة الإشعارات غير المقروءة فقط عند جلبها
+          const unreadNotifications = (data || []).filter(
+            (notif: Notification) => notif.status !== "read"
+          );
+          setNotifications(unreadNotifications);
         } catch (error) {
           console.error("Error fetching notifications:", error);
         }
@@ -41,14 +41,35 @@ const Notifications = () => {
     }
   }, [session]);
 
-  // دالة لإزالة الإشعار من القائمة بعد النقر على عرض العقد
-  const handleViewContract = (idhome: string) => {
-    if (isClient) {
-      // إزالة الإشعار من الحالة
-      setNotifications((prevNotifications) =>
-        prevNotifications.filter((notif) => notif.idhome !== idhome)
-      );
-      // توجيه المستخدم إلى صفحة العقد
+  // دالة لإزالة الإشعار من القائمة بعد النقر على عرض العقد وتحديث حالته إلى "read"
+  const handleViewContract = async (idhome: string) => {
+    if (isClient && session?.user.id) {
+      try {
+        // إرسال طلب PATCH لتحديث حالة الإشعار إلى "read"
+        const response = await fetch("/api/update-notification", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            idhome,
+            userId: session.user.id, // تم إرسال ID المستخدم
+          }),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          // تحديث الإشعار في الواجهة
+          setNotifications((prevNotifications) =>
+            prevNotifications.filter((notif) => notif.idhome !== idhome)
+          );
+          // توجيه المستخدم إلى صفحة العقد
+        } else {
+          console.error("Failed to update notification status");
+        }
+      } catch (error) {
+        console.error("Error updating notification status:", error);
+      }
     }
   };
 
@@ -79,8 +100,9 @@ const Notifications = () => {
                 </div>
                 {notif.idhome && (
                   <a
-                    href={`/contract/${notif.idhome}`}
+                    // href={`/contract/${notif.idhome}`}
                     className="bg-blue-500 text-white text-sm px-4 py-2 rounded-xl transition-all duration-200 hover:bg-blue-600"
+                    onClick={() => handleViewContract(notif.idhome)}
                   >
                     عرض العقد
                   </a>
