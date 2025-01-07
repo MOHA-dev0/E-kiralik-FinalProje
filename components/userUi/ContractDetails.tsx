@@ -34,7 +34,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({ id, onClose }) => {
 
   if (!contract)
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
         <div className="flex flex-col items-center">
           <div className="w-16 h-16 border-4 border-gray-200 border-dashed rounded-full animate-spin"></div>
           <p className="mt-4 text-2xl font-bold text-white tracking-wide">

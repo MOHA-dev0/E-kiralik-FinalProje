@@ -68,7 +68,7 @@ const Notifications = () => {
   };
 
   return (
-    <div className="absolute top-24 right-0 w-full max-w-sm p-5 bg-white rounded-xl shadow-lg backdrop-blur-md ring-1 ring-gray-200 z-50">
+    <div className="absolute top-24 right-14 w-full max-w-sm sm:max-w-xs p-5 bg-white rounded-xl shadow-lg backdrop-blur-md ring-1 ring-gray-200 z-50 sm:bg-background ">
       <h2 className="text-lg font-bold text-gray-800 mb-4 text-center">
         Bildirimler
       </h2>

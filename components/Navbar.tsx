@@ -20,6 +20,7 @@ function Navbar() {
   const router = useRouter();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false); // الإشعارات
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // القائمة المنسدلة
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // القائمة الجوال
 
   // دالة لفتح أو إغلاق الإشعارات
   const toggleNotifications = () => {
@@ -34,16 +35,16 @@ function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
-      <div className="container mx-auto flex justify-between items-center py-1 px-4 md:px-12 lg:px-22">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md h-[75px] sm:h-24">
+      <div className="container mx-auto flex justify-between items-center py-0 px-4 md:px-6 ">
         {/* Logo */}
-        <div className="relative w-[100px] aspect-square">
+        <div className="relative w-[100px] aspect-square ">
           <Link href="/">
             <Image
               src={logo}
               alt="logo"
               fill
-              className="object-center object-contain"
+              className="object-center object-contain  "
             />
           </Link>
         </div>
@@ -138,7 +139,60 @@ function Navbar() {
             </>
           )}
         </div>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden flex items-center gap-2">
+          <Menu
+            className="w-6 h-6 cursor-pointer"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          />
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="absolute top-16 right-0 max-w-xs shadow-lg p-4 rtl flex flex-col gap-4 bg-background">
+          <ul className="flex flex-col gap-6 text-foreground font-semibold">
+            <li>
+              <Link
+                href={`/user/${session?.user?.tc}`}
+                className="flex items-center gap-2"
+              >
+                <User className="w-5 h-5" />
+              </Link>
+            </li>
+            <li>
+              <Link href="" className="flex items-center gap-2 cursor-pointer">
+                <Bell className="w-5 h-5" onClick={toggleNotifications} />
+              </Link>
+            </li>
+          </ul>
+          <div className="mt-4 flex flex-col gap-4">
+            {session ? (
+              <>
+                <button className="flex items-center gap-2">
+                  <Settings className="w-5 h-5" />
+                </button>
+                <button
+                  className="flex items-center gap-2"
+                  onClick={handleSignOut}
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/api/auth/signin"
+                className="text-foreground hover:text-muted-foreground"
+              >
+                <LogIn />
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
+
+      {isNotificationsOpen && <Notifications />}
     </nav>
   );
 }
