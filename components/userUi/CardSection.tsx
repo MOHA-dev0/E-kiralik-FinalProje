@@ -17,15 +17,17 @@ import {
 } from "@/sanity/lib/queries";
 import { useSession } from "next-auth/react";
 
-// استيراد النموذج
+// استيراد المودالين
 import ESozlesmeForm from "@/components/userUi/EsozlesmseForm";
+import ContractDetails from "@/components/userUi/ContractDetails";
 
 const CardSection = () => {
   const params = useParams(); // Get dynamic route parameter
   const { data: session } = useSession();
   const [homes, setHomes] = useState<Home[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [showModal, setShowModal] = useState<boolean>(false); // حالة لعرض الـ modal
+  const [showModalForm, setShowModalForm] = useState<boolean>(false); // حالة عرض المودال الأول
+  const [showModalDetails, setShowModalDetails] = useState<boolean>(false); // حالة عرض المودال الثاني
   const [selectedHomeId, setSelectedHomeId] = useState<string | null>(null);
 
   interface Home {
@@ -63,24 +65,40 @@ const CardSection = () => {
     }
   }, [params.id, session]);
 
-  const handleShowModal = (id: string) => {
-    console.log("Selected Home ID:", id);
+  const handleShowModalForm = (id: string) => {
     setSelectedHomeId(id);
-    setShowModal(true); // عند الضغط على الأيقونة، إظهار الـ modal
+    setShowModalForm(true); // عرض المودال الأول
+  };
+
+  const handleShowModalDetails = (id: string) => {
+    setSelectedHomeId(id);
+    setShowModalDetails(true); // عرض المودال الثاني
   };
 
   const handleCloseModal = () => {
-    setShowModal(false); // إغلاق الـ modal
+    setShowModalForm(false);
+    setShowModalDetails(false); // إغلاق المودالين
   };
 
   return (
     <>
-      {showModal && selectedHomeId && (
+      {showModalForm && selectedHomeId && (
         <ESozlesmeForm onClose={handleCloseModal} homeId={selectedHomeId} />
       )}
 
+      {showModalDetails && selectedHomeId && (
+        <ContractDetails onClose={handleCloseModal} id={selectedHomeId} />
+      )}
+
       {loading ? (
-        <p className="ml-9">Loading...</p>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="flex flex-col items-center">
+            <div className="w-16 h-16 border-4 border-gray-200 border-dashed rounded-full animate-spin"></div>
+            <p className="mt-4 text-2xl font-bold text-white tracking-wide">
+              Loading...
+            </p>
+          </div>
+        </div>
       ) : homes.length ? (
         <div className="flex flex-wrap gap-4 justify-start ml-9">
           {" "}
@@ -103,26 +121,24 @@ const CardSection = () => {
                 <CardFooter className="flex justify-end">
                   {session?.user.isLandlord ? (
                     home.tenant_id ? (
-                      <a href={`/showContract/${home._id}`}>
-                        <ShieldAlert
-                          className="text-red-500 cursor-pointer"
-                          size={24}
-                        />{" "}
-                      </a> // إذا كان البيت مستأجرًا
+                      <ShieldAlert
+                        className="text-red-500 cursor-pointer"
+                        size={24}
+                        onClick={() => handleShowModalDetails(home._id)} // فتح المودال الثاني
+                      />
                     ) : (
                       <UserRoundPlus
                         className="text-green-500 cursor-pointer"
                         size={24}
-                        onClick={() => handleShowModal(home._id)} // إظهار الـ modal عند الضغط
+                        onClick={() => handleShowModalForm(home._id)} // فتح المودال الأول
                       />
                     )
                   ) : (
-                    <a href={`/showContract/${home._id}`}>
-                      <ShieldAlert
-                        className="text-red-500 cursor-pointer"
-                        size={24}
-                      />{" "}
-                    </a> // يظهر دائمًا ShieldAlert للمستأجر
+                    <ShieldAlert
+                      className="text-red-500 cursor-pointer"
+                      size={24}
+                      onClick={() => handleShowModalDetails(home._id)} // فتح المودال الثاني
+                    />
                   )}
                 </CardFooter>
               </Card>

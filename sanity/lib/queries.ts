@@ -54,3 +54,20 @@ export const GET_NOTIFICATIONS_QUERY = defineQuery(`
   notifications[idhome == "eLZC6C7gcUre0zGjrpiMq8"]
   }
   `);
+
+export const GET_ECONTRACTS_BY_HOMEID_QUERY = defineQuery(`
+    
+    *[_type == "eContract" && home_id._ref == $id] {
+  _id,
+  home_id,
+  anlasmaKosullari,
+  evEsyaliMi,
+  tenant_id-> { username, tc },
+  owner_id-> { username, tc },
+  komisyonTutari,
+  sozlesmeSuresi,
+  kiraTutari,
+  girisTarihi,
+
+}
+`);
