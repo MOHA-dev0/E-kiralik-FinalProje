@@ -18,12 +18,13 @@ import Notifications from "./userUi/Notifications";
 function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // حالة لتحديد إذا كانت نافذة الإشعارات مفتوحة
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false); // الإشعارات
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // القائمة المنسدلة
 
-  // دالة لفتح أو إغلاق نافذة الإشعارات
+  // دالة لفتح أو إغلاق الإشعارات
   const toggleNotifications = () => {
-    setIsOpen(!isOpen);
+    setIsNotificationsOpen(!isNotificationsOpen);
+    setIsDropdownOpen(false); // إغلاق القائمة المنسدلة عند فتح الإشعارات
   };
 
   const handleSignOut = async () => {
@@ -72,18 +73,28 @@ function Navbar() {
           {session ? (
             <>
               <Bell
-                className="my-2 w-6 h-6 text-gray-600 cursor-pointer hover:text-gray-900 transition-colors duration-300"
+                className={`my-2 w-6 h-6 ${
+                  isNotificationsOpen ? "text-gray-900" : "text-gray-600"
+                } cursor-pointer hover:text-gray-900 transition-colors duration-300`}
                 onClick={toggleNotifications} // عند الضغط على الجرس
               />
               {/* نافذة الإشعارات */}
-              {isOpen && <Notifications />}
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Avatar className="cursor-pointer">
-                    <AvatarFallback className="bg-gray-500 text-white rounded-full w-12 h-12 flex items-center justify-center">
-                      <User />
-                    </AvatarFallback>
-                  </Avatar>
+              {isNotificationsOpen && <Notifications />}
+              <DropdownMenu
+                open={isDropdownOpen}
+                onOpenChange={(open) => {
+                  setIsDropdownOpen(open); // تحديث الحالة عند تغيير حالة القائمة
+                  if (open) setIsNotificationsOpen(false); // إغلاق الإشعارات إذا تم فتح القائمة
+                }}
+              >
+                <DropdownMenuTrigger asChild>
+                  <div>
+                    <Avatar className="cursor-pointer">
+                      <AvatarFallback className="bg-gray-500 text-white rounded-full w-12 h-12 flex items-center justify-center">
+                        <User />
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="mt-2 w-48 rounded-xl shadow-lg bg-white/80 backdrop-blur-md ring-1 ring-black/10 cursor-pointer">
                   <DropdownMenuItem className="group flex items-center p-3 hover:bg-purple-100 transition-all duration-300 cursor-default rounded-lg">
@@ -125,57 +136,6 @@ function Navbar() {
                 <Button className="px-8 py-2 rounded-full">Login</Button>
               </Link>
             </>
-          )}
-        </div>
-
-        {/* Mobile Navigation */}
-        <div className="md:hidden">
-          {/* Menu Button */}
-          <button
-            className="text-foreground focus:outline-none"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-
-          {/* Mobile Menu */}
-          {isMenuOpen && (
-            <div className="absolute top-16 right-0 max-w-xs shadow-lg p-4 rtl flex flex-col gap-4 bg-background">
-              <ul className="flex flex-col gap-6 text-foreground font-semibold">
-                <li>
-                  <Link href="#Header" className="flex items-center gap-2">
-                    <User className="w-5 h-5" />
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#Contact" className="flex items-center gap-2">
-                    <Bell className="w-5 h-5" />
-                  </Link>
-                </li>
-              </ul>
-              <div className="mt-4 flex flex-col gap-4">
-                {session ? (
-                  <>
-                    <button className="flex items-center gap-2">
-                      <Settings className="w-5 h-5" />
-                    </button>
-                    <button
-                      className="flex items-center gap-2"
-                      onClick={handleSignOut}
-                    >
-                      <LogOut className="w-5 h-5" />
-                    </button>
-                  </>
-                ) : (
-                  <Link
-                    href="/api/auth/signin"
-                    className="text-foreground hover:text-muted-foreground"
-                  >
-                    <LogIn />
-                  </Link>
-                )}
-              </div>
-            </div>
           )}
         </div>
       </div>

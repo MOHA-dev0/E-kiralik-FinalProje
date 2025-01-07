@@ -113,7 +113,7 @@ const CardSection = () => {
                     {session?.user.isLandlord
                       ? home.tenant_id
                         ? `kiraci: ${home.tenant_id.username}` // عرض اسم المستأجر
-                        : "No Tenant"
+                        : "hiçbir kiraci yoktur"
                       : `ev sahbi: ${home.owner_id?.username || "No Owner"}`}
                   </CardTitle>
                   <CardDescription>{home.location}</CardDescription>

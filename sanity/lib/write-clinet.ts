@@ -9,7 +9,7 @@ export const writeClient = createClient({
   dataset,
   apiVersion,
   useCdn: true, // يجب أن تكون false للسماح بالتحديثات
-  token,
+  token: process.env.SANITY_WRITE_TOKEN,
 });
 
 if (!writeClient.config().token) {
