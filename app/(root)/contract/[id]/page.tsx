@@ -25,7 +25,16 @@ const ContractDetails = () => {
     }
   }, [id, session]);
 
-  if (!contract) return <div>Loading...</div>;
+  if (!contract)
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="relative inline-flex">
+          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-400 rounded-full"></div>
+          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-400 rounded-full absolute top-0 left-0 animate-ping"></div>
+          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-400 rounded-full absolute top-0 left-0 animate-pulse"></div>
+        </div>
+      </div>
+    );
 
   // معالج لتغيير حالة الـ Checkbox
   const handleCheckboxChange = (checked: boolean) => {

@@ -92,11 +92,10 @@ const CardSection = () => {
 
       {loading ? (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="flex flex-col items-center">
-            <div className="w-16 h-16 border-4 border-gray-200 border-dashed rounded-full animate-spin"></div>
-            <p className="mt-4 text-2xl font-bold text-white tracking-wide">
-              Loading...
-            </p>
+          <div className="relative inline-flex">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-400 rounded-full"></div>
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-400 rounded-full absolute top-0 left-0 animate-ping"></div>
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-400 rounded-full absolute top-0 left-0 animate-pulse"></div>
           </div>
         </div>
       ) : homes.length ? (
