@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { client } from "@/sanity/lib/client"; // تأكد من أن المسار صحيح
 import { sanityClient } from "@/sanity/lib/sanity";
 
 export async function POST(req: Request) {
@@ -16,7 +15,6 @@ export async function POST(req: Request) {
     }
     console.log(homeId);
 
-    // البحث عن المستخدم (المستأجر) باستخدام TC
     const tenant = await sanityClient.fetch(
       `*[_type == "user" && tc == $tc][0]`,
       { tc: kiraciKimligi }
@@ -29,14 +27,13 @@ export async function POST(req: Request) {
       );
     }
 
-    // تحديث الـ home مع tenant_id
     await sanityClient
       .patch(homeId)
       .set({ tenant_id: { _type: "reference", _ref: tenant._id } })
       .commit();
 
     await sanityClient
-      .patch(tenant._id) // تحديد المستند باستخدام _id
+      .patch(tenant._id)
       .unset([`notifications[_ref == "${homeId}"]`])
       .commit();
     console.log(homeId);

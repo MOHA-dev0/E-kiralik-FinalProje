@@ -7,9 +7,8 @@ import React from "react";
 
 const UserPage = () => {
   const { data: session } = useSession();
-  const params = useParams(); // Get dynamic route parameter
+  const params = useParams();
 
-  // Get the user ID (TC in your case)
   const userId = params.id;
 
   return (

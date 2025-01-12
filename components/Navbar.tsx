@@ -18,14 +18,13 @@ import Notifications from "./userUi/Notifications";
 function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false); // الإشعارات
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // القائمة المنسدلة
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // القائمة الجوال
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // دالة لفتح أو إغلاق الإشعارات
   const toggleNotifications = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
-    setIsDropdownOpen(false); // إغلاق القائمة المنسدلة عند فتح الإشعارات
+    setIsDropdownOpen(false);
   };
 
   const handleSignOut = async () => {
@@ -77,15 +76,14 @@ function Navbar() {
                 className={`my-2 w-6 h-6 ${
                   isNotificationsOpen ? "text-gray-900" : "text-gray-600"
                 } cursor-pointer hover:text-gray-900 transition-colors duration-300`}
-                onClick={toggleNotifications} // عند الضغط على الجرس
+                onClick={toggleNotifications}
               />
-              {/* نافذة الإشعارات */}
               {isNotificationsOpen && <Notifications />}
               <DropdownMenu
                 open={isDropdownOpen}
                 onOpenChange={(open) => {
-                  setIsDropdownOpen(open); // تحديث الحالة عند تغيير حالة القائمة
-                  if (open) setIsNotificationsOpen(false); // إغلاق الإشعارات إذا تم فتح القائمة
+                  setIsDropdownOpen(open);
+                  if (open) setIsNotificationsOpen(false);
                 }}
               >
                 <DropdownMenuTrigger asChild>
@@ -152,43 +150,48 @@ function Navbar() {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="absolute top-16 right-0 max-w-xs shadow-lg p-4 rtl flex flex-col gap-4 bg-background">
-          <ul className="flex flex-col gap-6 text-foreground font-semibold">
-            <li>
-              <Link
-                href={`/user/${session?.user?.tc}`}
-                className="flex items-center gap-2"
-              >
-                <User className="w-5 h-5" />
-              </Link>
-            </li>
-            <li>
-              <Link href="" className="flex items-center gap-2 cursor-pointer">
-                <Bell className="w-5 h-5" onClick={toggleNotifications} />
-              </Link>
-            </li>
-          </ul>
-          <div className="mt-4 flex flex-col gap-4">
-            {session ? (
-              <>
+          {session ? (
+            <ul className="flex flex-col gap-6 text-foreground font-semibold">
+              <li>
+                <Link
+                  href={`/user/${session?.user?.tc}`}
+                  className="flex items-center gap-2"
+                >
+                  <User className="w-5 h-5" />
+                </Link>
+              </li>
+              <li>
+                <button
+                  className="flex items-center gap-2 cursor-pointer"
+                  onClick={toggleNotifications}
+                >
+                  <Bell className="w-5 h-5" />
+                </button>
+              </li>
+              <li>
                 <button className="flex items-center gap-2">
                   <Settings className="w-5 h-5" />
                 </button>
+              </li>
+              <li>
                 <button
                   className="flex items-center gap-2"
                   onClick={handleSignOut}
                 >
                   <LogOut className="w-5 h-5" />
                 </button>
-              </>
-            ) : (
+              </li>
+            </ul>
+          ) : (
+            <div className="mt-4 flex flex-col gap-4">
               <Link
                 href="/api/auth/signin"
                 className="text-foreground hover:text-muted-foreground"
               >
                 <LogIn />
               </Link>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
 

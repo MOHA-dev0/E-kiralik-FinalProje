@@ -13,7 +13,7 @@ export const GET_OWNED_HOMES_QUERY = defineQuery(
          tenant_id->{
         _id,
          tc,
-        username // جلب اسم المستأجر مباشرةً
+        username  
     }
     }`
 );
@@ -48,12 +48,6 @@ export const GET_ECONTRACTS_QUERY = defineQuery(
     }
   }`
 );
-
-export const GET_NOTIFICATIONS_QUERY = defineQuery(`
-  *[_type == "user" && tc == $tc] {
-  notifications[idhome == "eLZC6C7gcUre0zGjrpiMq8"]
-  }
-  `);
 
 export const GET_ECONTRACTS_BY_HOMEID_QUERY = defineQuery(`
     

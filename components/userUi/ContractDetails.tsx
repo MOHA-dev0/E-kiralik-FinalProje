@@ -6,8 +6,8 @@ import { GET_ECONTRACTS_BY_HOMEID_QUERY } from "@/sanity/lib/queries";
 import { X } from "lucide-react";
 
 interface ContractDetailsProps {
-  id: string; // ID الخاص بالسجل
-  onClose: () => void; // دالة لإغلاق المودال
+  id: string;
+  onClose: () => void;
 }
 
 const ContractDetails: React.FC<ContractDetailsProps> = ({ id, onClose }) => {
@@ -22,7 +22,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({ id, onClose }) => {
             id,
           });
           console.log("Fetched Contract Data:", data);
-          setContract(data[0]); // استخدام العنصر الأول من المصفوفة
+          setContract(data[0]);
         } catch (error) {
           console.error("Error fetching contract data:", error);
         }

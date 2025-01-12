@@ -1,9 +1,9 @@
 import { Rule } from "sanity";
 
 export default {
-  name: "eContract", // اسم الـ Schema
-  title: "E-Contract", // العنوان الذي سيظهر في لوحة التحكم
-  type: "document", // نوع الـ Schema
+  name: "eContract",
+  title: "E-Contract",
+  type: "document",
   fields: [
     {
       name: "tenant_id",
@@ -79,10 +79,10 @@ export default {
         Rule.required().error("Owner ID is required."),
     },
     {
-      name: "home_id", // إضافة مرجع للمنزل
+      name: "home_id",
       title: "Home ID (Ev ID)",
-      type: "reference", // مرجع إلى الـ Schema `home`
-      to: [{ type: "home" }], // ربطه بـ `home`
+      type: "reference",
+      to: [{ type: "home" }],
       description: "Reference to the home document.",
       validation: (Rule: Rule) => Rule.required().error("Home ID is required."),
     },

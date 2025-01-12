@@ -5,7 +5,6 @@ export async function POST(req: NextRequest) {
   try {
     const { username, email, password, tc } = await req.json();
 
-    // تحقق مما إذا كان المستخدم موجودًا بالفعل
     const existingUser = await sanityClient.fetch(
       `*[_type == "user" && email == $email][0]`,
       { email }
@@ -13,29 +12,28 @@ export async function POST(req: NextRequest) {
 
     if (existingUser) {
       return NextResponse.json(
-        { error: "البريد الإلكتروني مستخدم بالفعل" },
+        { error: "E-posta zaten kullanımda" },
         { status: 400 }
       );
     }
 
-    // إضافة المستخدم الجديد إلى قاعدة البيانات
     const newUser = await sanityClient.create({
       _type: "user",
       username,
       email,
       password,
       tc,
-      isLandlord: false, // يمكنك تعديل هذا بناءً على التطبيق الخاص بك
+      isLandlord: false,
     });
 
     return NextResponse.json(
-      { message: "تم إنشاء الحساب بنجاح", user: newUser },
+      { message: "Hesap başarıyla oluşturuldu ", user: newUser },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error during signup:", error); // تسجيل الخطأ للتصحيح
+    console.error("Error during signup:", error);
     return NextResponse.json(
-      { error: "حدث خطأ أثناء التسجيل" },
+      { error: "Kayıt sırasında bir hata oluştu." },
       { status: 500 }
     );
   }

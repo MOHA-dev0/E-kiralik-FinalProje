@@ -1,17 +1,17 @@
 export default {
-  name: "user", // اسم الـ Schema
-  title: "User", // العنوان الذي سيظهر في لوحة التحكم في Sanity
-  type: "document", // نوع الـ Schema (document يعني وثيقة مستقلة)
+  name: "user",
+  title: "User",
+  type: "document",
   fields: [
     {
       name: "username",
       title: "Username",
-      type: "string", // نوع الحقل (هنا نستخدم string لاسم المستخدم)
+      type: "string",
     },
     {
       name: "email",
       title: "Email",
-      type: "string", // نوع الحقل (هنا نستخدم string للبريد الإلكتروني)
+      type: "string",
     },
     {
       name: "notifications",
@@ -24,14 +24,14 @@ export default {
             {
               name: "message",
               title: "Message",
-              type: "string", // محتوى الإشعار
+              type: "string",
             },
             {
               name: "status",
               title: "Status",
-              type: "string", // حالة الإشعار
+              type: "string",
               options: {
-                list: ["unread", "read"], // حالات الإشعار
+                list: ["unread", "read"],
                 layout: "radio",
               },
               initialValue: "unread",
@@ -39,12 +39,12 @@ export default {
             {
               name: "date",
               title: "Date",
-              type: "datetime", // تاريخ إرسال الإشعار
+              type: "datetime",
             },
             {
               name: "idhome",
               title: "IDHOME",
-              type: "string", // معرف الإشعار
+              type: "string",
             },
           ],
         },
@@ -54,34 +54,33 @@ export default {
     {
       name: "password",
       title: "Password",
-      type: "text", // نوع الحقل.
-      // إخفاء الحقل في لوحة التحكم
+      type: "text",
     },
     {
       name: "isLandlord",
       title: "Is Landlord",
-      type: "boolean", // حقل لتحديد ما إذا كان المستخدم صاحب منزل أم لا
-      description: "Check if the user is a landlord", // وصف الحقل
+      type: "boolean",
+      description: "Check if the user is a landlord",
     },
     {
       name: "tc",
-      title: "TC (Kimlik Numarası)", // عنوان الحقل
-      type: "string", // نوع الحقل
-      description: "Turkish ID Number (11 digits)", // وصف الحقل
+      title: "TC (Kimlik Numarası)",
+      type: "string",
+      description: "Turkish ID Number (11 digits)",
       validation: (Rule: {
         regex: (
           arg0: RegExp,
           arg1: {
-            name: string; // اسم القاعدة
-            invert: boolean; // شرط التحقق
+            name: string;
+            invert: boolean;
             message: string;
           }
         ) => any;
       }) =>
         Rule.regex(/^\d{11}$/, {
-          name: "TC Number", // اسم القاعدة
-          invert: false, // شرط التحقق
-          message: "TC يجب أن يحتوي على 11 رقماً فقط.", // رسالة الخطأ
+          name: "TC Number",
+          invert: false,
+          message: "TC يجب أن يحتوي على 11 رقماً فقط.",
         }),
     },
   ],

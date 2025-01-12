@@ -2,7 +2,7 @@
 import { useSession } from "next-auth/react";
 import { client } from "@/sanity/lib/client";
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation"; // استخدم useParams للحصول على المعلمات من الرابط
+import { useParams, useRouter } from "next/navigation";
 import ShinyButton from "@/components/ui/shiny-button";
 import { GET_ECONTRACTS_QUERY } from "@/sanity/lib/queries";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -10,8 +10,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 const ContractDetails = () => {
   const { data: session } = useSession();
   const [contract, setContract] = useState<any>(null);
-  const { id } = useParams(); // استخدام useParams بدلاً من useRouter للحصول على الـ id من الرابط
-  const [isChecked, setIsChecked] = useState(false); // حالة تتبع تفعيل الـ Checkbox
+  const { id } = useParams();
+  const [isChecked, setIsChecked] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -36,9 +36,8 @@ const ContractDetails = () => {
       </div>
     );
 
-  // معالج لتغيير حالة الـ Checkbox
   const handleCheckboxChange = (checked: boolean) => {
-    setIsChecked(checked); // تحديث حالة الـ Checkbox بناءً على قيمة الـ checked
+    setIsChecked(checked);
   };
 
   const handleAcceptContract = async () => {
@@ -157,8 +156,8 @@ const ContractDetails = () => {
 
         <div className="mt-4 mx-auto items-top flex space-x-2">
           <Checkbox
-            checked={isChecked} // حدد الـ Checkbox بناءً على حالة isChecked
-            onCheckedChange={handleCheckboxChange} // تغيير الحالة عند التفاعل مع الـ Checkbox
+            checked={isChecked}
+            onCheckedChange={handleCheckboxChange}
           />
           <div className="grid gap-1.5 leading-none">
             <label
@@ -174,7 +173,7 @@ const ContractDetails = () => {
         </div>
 
         <ShinyButton
-          disabled={!isChecked} // الزر غير مفعل إذا لم يكن الـ Checkbox محددًا
+          disabled={!isChecked}
           onClick={handleAcceptContract}
           type="submit"
           className="text-white bg-white px-5 py-5 w-[200px] flex justify-center items-center mx-auto mt-8 disabled:opacity-50"

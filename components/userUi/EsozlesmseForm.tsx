@@ -1,19 +1,15 @@
-// conponents/userUi/EsozlesmseForm.tsx
-
-// لازم نشتغل انو لمن يضغط على فتح انشاء العقد نسحب ايدي البيت مشان نربطه فيه وننشتغل ع موضوع
-
 import React, { useState } from "react";
 import ShinyButton from "@/components/ui/shiny-button";
 import { useSession } from "next-auth/react";
-import { client } from "@/sanity/lib/client"; // Adjust the import path as necessary
+import { client } from "@/sanity/lib/client";
 
 interface ESozlesmeFormProps {
   onClose: () => void;
-  homeId: string; // Add the homeId property
+  homeId: string;
 }
 
 const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
-  const { data: session } = useSession(); // بيانات الجلسة مع حالة الجلسة
+  const { data: session } = useSession();
   const [formData, setFormData] = useState({
     kiraciKimligi: "",
     girisTarihi: "",
@@ -36,28 +32,26 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
     e.preventDefault();
 
     if (!session) {
-      alert("Lütfen giriş yapın."); // رسالة خطأ في حال عدم وجود جلسة
+      alert("Lütfen giriş yapın.");
       return;
     }
 
-    // التحقق من وجود الكملك في قاعدة البيانات للحصول على id
     const kiraci = await client.fetch(`*[_type == "user" && tc == $tc][0]`, {
       tc: formData.kiraciKimligi,
     });
 
     if (!kiraci) {
       alert("Bu kiracının kimlik bilgileri veritabanında bulunmamaktadır.");
-      return; // إيقاف عملية الحفظ إذا لم يكن الكملك موجودًا
+      return;
     }
 
-    // أخذ الـ id من بيانات المستأجر
     const kiraciId = kiraci._id;
 
     const contractData = {
       ...formData,
-      kiraciId, // إضافة id المستأجر هنا
-      owner_id: session?.user?.id || "", // إضافة معرف صاحب البيت من الجلسة
-      home_id: homeId, // إضافة معرف البيت هنا
+      kiraciId,
+      owner_id: session?.user?.id || "",
+      home_id: homeId,
     };
 
     try {
@@ -71,7 +65,7 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
 
       if (response.ok) {
         alert("Sözleşme başarıyla kaydedildi!");
-        onClose(); // إغلاق النموذج بعد الإرسال
+        onClose();
       } else {
         console.error("Hata oluştu:", response.statusText);
         console.log("Contract Data:", JSON.stringify(contractData));
@@ -99,7 +93,6 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* الحقول */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -116,7 +109,6 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
               />
             </div>
 
-            {/* باقي الحقول هنا كما هو موضح في الكود السابق */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Giriş Tarihi

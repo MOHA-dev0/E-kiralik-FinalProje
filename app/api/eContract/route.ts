@@ -46,7 +46,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // إنشاء وثيقة العقد
     const document = {
       _type: "eContract",
       owner_id: { _type: "reference", _ref: owner_id },
@@ -62,19 +61,12 @@ export async function POST(req: Request) {
 
     const contractResponse = await sanityClient.create(document);
 
-    // تحديث الـ home مع المستأجر
-    // await sanityClient
-    //   .patch(home_id) // تأكد أن التحديث يتم على home_id وليس contract id
-    //   .set({ tenant_id: { _type: "reference", _ref: tenant._id } })
-    //   .commit();
-
-    // إرسال إشعار للمستأجر
     const notification = {
       _key: crypto.randomUUID(),
       message: "Yeni bir konut başvurusu var. Lütfen sözleşmeyi inceleyin.",
       status: "unread",
       date: new Date().toISOString(),
-      idhome: contractResponse._id, // استخدم home_id بدلاً من contractResponse._id
+      idhome: contractResponse._id,
     };
 
     try {

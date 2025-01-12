@@ -7,12 +7,12 @@ declare module "next-auth" {
       username?: string;
       isLandlord?: boolean;
       tc?: string;
-      id?: string; // إضافة الحقل المخصص id
+      id?: string;
     };
   }
 
   interface User {
-    id: string; // إضافة الحقل المخصص id
+    id: string;
     tc: string;
     username: string;
     isLandlord: boolean;

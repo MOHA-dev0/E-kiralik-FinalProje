@@ -19,7 +19,6 @@ const SignInPage = () => {
     });
 
     if (res?.error) {
-      // If there is an error
       setError("Invalid TC or password.");
     } else if (res?.ok) {
       router.push("/");

@@ -8,7 +8,7 @@ export const writeClient = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: false, // يجب أن تكون false للسماح بالتحديثات
+  useCdn: false,
   token: process.env.SANITY_WRITE_TOKEN,
 });
 
