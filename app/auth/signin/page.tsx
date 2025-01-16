@@ -26,15 +26,17 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="container max-w-lg mx-auto mt-20 p-6 bg-white rounded-lg shadow-lg">
-      <h1 className="text-2xl font-semibold text-center mb-4">Sign In</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+    <div className="container max-w-lg mx-auto mt-20 p-8 bg-white rounded-xl shadow-2xl transform transition-all duration-300 hover:scale-105">
+      <h1 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-500 to-green-400  bg-clip-text text-transparent">
+        Giriş Yap
+      </h1>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
           <label
             htmlFor="tc"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
-            TC Number
+            Kimlik numarası
           </label>
           <input
             id="tc"
@@ -42,15 +44,16 @@ const SignInPage = () => {
             value={tc}
             onChange={(e) => setTc(e.target.value)}
             required
-            className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+            placeholder="Enter your TC number"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
-            Password
+            Şifre
           </label>
           <input
             id="password"
@@ -58,13 +61,18 @@ const SignInPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+            placeholder="Enter your password"
           />
         </div>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && (
+          <p className="text-red-500 text-sm text-center animate-pulse">
+            {error}
+          </p>
+        )}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+          className="w-full bg-gradient-to-r from-blue-500 to-green-400 text-white py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-green-500 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
         >
           Sign In
         </button>

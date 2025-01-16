@@ -2,7 +2,11 @@ import { useSession } from "next-auth/react";
 import { client } from "@/sanity/lib/client";
 import { useEffect, useState } from "react";
 
-const Notifications = () => {
+const Notifications = ({
+  setNotificationCount,
+}: {
+  setNotificationCount: (count: number) => void;
+}) => {
   const { data: session } = useSession();
   const [isClient, setIsClient] = useState(false);
 
@@ -30,6 +34,7 @@ const Notifications = () => {
           const unreadNotifications = (data || []).filter(
             (notif: Notification) => notif.status !== "read"
           );
+          setNotificationCount(unreadNotifications.length); // تحديث العدد في المكون الأب
           setNotifications(unreadNotifications);
         } catch (error) {
           console.error("Error fetching notifications:", error);
@@ -37,7 +42,7 @@ const Notifications = () => {
       };
       fetchNotifications();
     }
-  }, [session]);
+  }, [session, setNotificationCount]);
 
   const handleViewContract = async (idhome: string) => {
     if (isClient && session?.user.id) {
@@ -58,6 +63,7 @@ const Notifications = () => {
           setNotifications((prevNotifications) =>
             prevNotifications.filter((notif) => notif.idhome !== idhome)
           );
+          alert("تم تحديث حالة الإشعار بنجاح!"); // رسالة تأكيد
         } else {
           console.error("Failed to update notification status");
         }
@@ -68,8 +74,8 @@ const Notifications = () => {
   };
 
   return (
-    <div className="absolute top-24 right-14 w-full max-w-sm sm:max-w-xs p-5 bg-white rounded-xl shadow-lg backdrop-blur-md ring-1 ring-gray-200 z-50 sm:bg-background ">
-      <h2 className="text-lg font-bold text-gray-800 mb-4 text-center">
+    <div className="absolute top-24 right-14 w-full max-w-sm sm:max-w-xs p-5 bg-white/90 backdrop-blur-lg rounded-xl shadow-2xl ring-1 ring-white/20 z-50">
+      <h2 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent mb-4 text-center">
         Bildirimler
       </h2>
       <ul className="space-y-4 max-h-80 overflow-y-auto">
@@ -77,11 +83,11 @@ const Notifications = () => {
           notifications.map((notif, index) => (
             <li
               key={index}
-              className={`p-4 rounded-xl border ${
+              className={`p-4 rounded-xl backdrop-blur-sm ${
                 notif.status === "unread"
-                  ? "border-blue-500 bg-blue-100"
-                  : "border-gray-200 bg-gray-50"
-              } transition-all duration-200 hover:shadow-md`}
+                  ? "bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 shadow-lg"
+                  : "bg-white/80 border border-gray-200"
+              } transition-all duration-300 hover:shadow-xl`}
             >
               <div className="flex justify-between items-start">
                 <div className="space-y-2">
@@ -95,7 +101,7 @@ const Notifications = () => {
                 {notif.idhome && (
                   <a
                     href={`/contract/${notif.idhome}`}
-                    className="bg-blue-500 text-white text-xs px-3 py-2 rounded-md transition-all duration-200 hover:bg-blue-600"
+                    className="bg-gradient-to-r from-blue-500 to-green-500 text-white text-xs px-3 py-2 rounded-md transition-all duration-300 hover:from-blue-600 hover:to-green-600 shadow-md hover:shadow-lg"
                     onClick={() => handleViewContract(notif.idhome)}
                   >
                     Sözleşmeyi görüntüle

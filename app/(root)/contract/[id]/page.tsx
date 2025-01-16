@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import ShinyButton from "@/components/ui/shiny-button";
 import { GET_ECONTRACTS_QUERY } from "@/sanity/lib/queries";
 import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 
 const ContractDetails = () => {
   const { data: session } = useSession();
@@ -83,17 +84,18 @@ const ContractDetails = () => {
     }
   };
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-white bg-opacity-80 shadow-2xl rounded-xl max-w-full sm:max-w-3xl w-full p-4 sm:p-8 relative border-4 border-black ">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 text-center mb-6 sm:mb-8">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
+      <div className="bg-white/90 backdrop-blur-lg shadow-2xl rounded-xl max-w-full sm:max-w-3xl w-full p-6 sm:p-8 relative border border-white/20">
+        <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent text-center mb-6 sm:mb-8">
           E-Sözleşme
         </h2>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              malik Kimliği
+              Malik Kimliği
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md">
               {contract?.owner_id?.tc}
             </div>
           </div>
@@ -102,7 +104,7 @@ const ContractDetails = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Giriş Tarihi
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md">
               {contract?.girisTarihi}
             </div>
           </div>
@@ -111,7 +113,7 @@ const ContractDetails = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Kira Tutarı
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md">
               {contract?.kiraTutari}
             </div>
           </div>
@@ -120,7 +122,7 @@ const ContractDetails = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Komisyon Tutarı
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md">
               {contract?.komisyonTutari}
             </div>
           </div>
@@ -129,8 +131,8 @@ const ContractDetails = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Sözleşme Süresi (ay)
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-              {contract?.sozlesmeSuresi}{" "}
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md">
+              {contract?.sozlesmeSuresi}
             </div>
           </div>
 
@@ -138,18 +140,17 @@ const ContractDetails = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Ev Eşyalı mı?
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-              {contract?.evEsyaliMi ? "evet" : "hayır"}
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md">
+              {contract?.evEsyaliMi ? "Evet" : "Hayır"}
             </div>
           </div>
         </div>
 
-        {/* textarea */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Anlaşma Koşulları
           </label>
-          <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+          <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md">
             {contract?.anlasmaKosullari}
           </div>
         </div>
@@ -162,12 +163,26 @@ const ContractDetails = () => {
           <div className="grid gap-1.5 leading-none">
             <label
               htmlFor="terms1"
-              className="text-sm font-medium leading-none "
+              className="text-sm font-medium leading-none"
             >
               Accept terms and conditions
             </label>
             <p className="text-sm text-muted-foreground">
-              You agree to our Terms of Service and Privacy Policy.
+              You agree to our{" "}
+              <Link
+                href="/terms-and-privacy"
+                className="text-blue-500 hover:text-blue-600 underline"
+              >
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/terms-and-privacy"
+                className="text-blue-500 hover:text-blue-600 underline"
+              >
+                Privacy Policy
+              </Link>
+              .
             </p>
           </div>
         </div>
@@ -178,7 +193,7 @@ const ContractDetails = () => {
           type="submit"
           className="text-white bg-white px-5 py-5 w-[200px] flex justify-center items-center mx-auto mt-8 disabled:opacity-50"
         >
-          Kabul Ediyourum
+          Kabul Ediyorum
         </ShinyButton>
       </div>
     </div>

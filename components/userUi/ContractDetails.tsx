@@ -44,72 +44,80 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({ id, onClose }) => {
     );
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-white bg-opacity-80 shadow-2xl rounded-xl max-w-full sm:max-w-3xl w-full p-4 sm:p-8 relative border-4 border-black">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
+      <div className="bg-white/90 backdrop-blur-lg shadow-2xl rounded-xl max-w-full sm:max-w-3xl w-full p-6 sm:p-8 relative border border-white/20">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-700 hover:text-gray-900"
+          className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition-colors duration-300"
         >
           <X size={24} />
         </button>
-        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 text-center mb-6 sm:mb-8">
+
+        <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent text-center mb-6 sm:mb-8">
           E-Sözleşme
         </h2>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              malik Kimliği
+              Malik Kimliği
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm">
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm transition-all duration-300 hover:shadow-md">
               {contract?.owner_id?.tc}
             </div>
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Giriş Tarihi
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm">
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm transition-all duration-300 hover:shadow-md">
               {contract?.girisTarihi}
             </div>
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Kira Tutarı
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm">
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm transition-all duration-300 hover:shadow-md">
               {contract?.kiraTutari}
             </div>
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Komisyon Tutarı
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm">
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm transition-all duration-300 hover:shadow-md">
               {contract?.komisyonTutari}
             </div>
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Sözleşme Süresi (ay)
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm">
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm transition-all duration-300 hover:shadow-md">
               {contract?.sozlesmeSuresi}
             </div>
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Ev Eşyalı mı?
             </label>
-            <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm">
-              {contract?.evEsyaliMi ? "evet" : "hayır"}
+            <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm transition-all duration-300 hover:shadow-md">
+              {contract?.evEsyaliMi ? "Evet" : "Hayır"}
             </div>
           </div>
         </div>
-        <div>
+
+        <div className="mt-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Anlaşma Koşulları
           </label>
-          <div className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm">
+          <div className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm transition-all duration-300 hover:shadow-md">
             {contract?.anlasmaKosullari}
           </div>
         </div>

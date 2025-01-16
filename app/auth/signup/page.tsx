@@ -36,18 +36,20 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="container max-w-lg mx-auto mt-20 p-6 bg-white rounded-lg shadow-lg">
-      <h1 className="text-2xl font-semibold text-center mb-4">
+    <div className="container max-w-lg mx-auto mt-20 p-8 bg-white rounded-xl shadow-2xl transform transition-all duration-300 hover:scale-105">
+      <h1 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent">
         Yeni Hesap Oluştur
       </h1>
       {error && (
-        <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+        <p className="text-red-500 text-sm text-center mb-4 animate-pulse">
+          {error}
+        </p>
       )}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
           <label
             htmlFor="username"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
             Kullanıcı Adı
           </label>
@@ -58,13 +60,14 @@ const SignupPage = () => {
             value={formData.username}
             onChange={handleChange}
             required
-            className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+            placeholder="Kullanıcı adınızı girin"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
             E-Posta
           </label>
@@ -75,13 +78,14 @@ const SignupPage = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+            placeholder="E-posta adresinizi girin"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
             Şifre
           </label>
@@ -92,13 +96,14 @@ const SignupPage = () => {
             value={formData.password}
             onChange={handleChange}
             required
-            className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+            placeholder="Şifrenizi girin"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label
             htmlFor="tc"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
             TC Kimlik Numarası
           </label>
@@ -109,12 +114,13 @@ const SignupPage = () => {
             value={formData.tc}
             onChange={handleChange}
             required
-            className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+            placeholder="TC kimlik numaranızı girin"
           />
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+          className="w-full bg-gradient-to-r from-blue-500 to-green-400 text-white py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-green-500 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
         >
           Hesap Oluştur
         </button>

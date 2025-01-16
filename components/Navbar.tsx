@@ -12,7 +12,7 @@ import {
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Notifications from "./userUi/Notifications";
 
 function Navbar() {
@@ -21,6 +21,30 @@ function Navbar() {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    const fetchNotificationCount = async () => {
+      try {
+        if (!session) return;
+        const userId = session?.user.tc; // استبدل بـ ID المستخدم الحالي
+        const response = await fetch(
+          `/api/notifications-count?userId=${userId}`
+        );
+        const data = await response.json();
+
+        if (response.ok) {
+          setNotificationCount(data.count);
+        } else {
+          console.error("Failed to fetch notification count:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching notification count:", error);
+      }
+    };
+
+    fetchNotificationCount();
+  }, [session]);
 
   const toggleNotifications = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
@@ -35,21 +59,21 @@ function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md h-[75px] sm:h-24">
-      <div className="container mx-auto flex justify-between items-center py-0 px-4 md:px-6 ">
+      <div className="container mx-auto flex justify-around items-center py-0 px-4 md:px-6">
         {/* Logo */}
-        <div className="relative w-[100px] aspect-square ">
+        <div className="relative w-[100px] aspect-square">
           <Link href="/">
             <Image
               src={logo}
               alt="logo"
               fill
-              className="object-center object-contain  "
+              className="object-center object-contain"
             />
           </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="hidden md:flex gap-7 text-gray-700 font-semibold">
+        <ul className="hidden md:flex gap-7 text-gray-700 font-semibold justify-center">
           <li>
             <Link
               href="#Header"
@@ -72,24 +96,34 @@ function Navbar() {
         <div className="hidden md:flex gap-4 items-center">
           {session ? (
             <>
-              <Bell
-                className={`my-2 w-6 h-6 ${
-                  isNotificationsOpen ? "text-gray-900" : "text-gray-600"
-                } cursor-pointer hover:text-gray-900 transition-colors duration-300`}
-                onClick={toggleNotifications}
-              />
-              {isNotificationsOpen && <Notifications />}
+              <div className="relative">
+                <Bell
+                  className={`my-2 w-6 h-6 ${
+                    isNotificationsOpen ? "text-gray-900" : "text-gray-600"
+                  } cursor-pointer hover:text-gray-900 transition-colors duration-300`}
+                  onClick={toggleNotifications}
+                />
+                {notificationCount >= 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                    {notificationCount}
+                  </span>
+                )}
+              </div>
+              {isNotificationsOpen && (
+                <Notifications setNotificationCount={setNotificationCount} />
+              )}
               <DropdownMenu
                 open={isDropdownOpen}
                 onOpenChange={(open) => {
                   setIsDropdownOpen(open);
                   if (open) setIsNotificationsOpen(false);
                 }}
+                modal={false} // إضافة هذه الخاصية لمنع تعطيل التمرير
               >
                 <DropdownMenuTrigger asChild>
                   <div>
                     <Avatar className="cursor-pointer">
-                      <AvatarFallback className="bg-gray-500 text-white rounded-full w-12 h-12 flex items-center justify-center">
+                      <AvatarFallback className="bg-gray-500 text-white rounded-full w-12 h-12 flex items-center justify-center left-2">
                         <User />
                       </AvatarFallback>
                     </Avatar>
@@ -195,7 +229,9 @@ function Navbar() {
         </div>
       )}
 
-      {isNotificationsOpen && <Notifications />}
+      {isNotificationsOpen && (
+        <Notifications setNotificationCount={setNotificationCount} />
+      )}
     </nav>
   );
 }

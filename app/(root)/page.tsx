@@ -1,5 +1,6 @@
 import CardSection from "@/components/CardSection";
 import SecondSection from "@/components/SecondSection";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -30,15 +31,11 @@ export default function Home() {
             &copy; 2024 E-Kiralık | Tüm Hakları Saklıdır
           </p>
           <div className="flex justify-center items-center space-x-4 mt-4">
-            <a href="#" className="text-white hover:text-gray-200">
-              Hakkında
-            </a>
-            <a href="#" className="text-white hover:text-gray-200">
-              İletişim
-            </a>
-            <a href="#" className="text-white hover:text-gray-200">
-              Gizlilik Politikası
-            </a>
+            <Link href="/terms-and-privacy">
+              <p className="text-white hover:text-gray-200">
+                Gizlilik Politikası
+              </p>
+            </Link>
           </div>
         </div>
       </footer>

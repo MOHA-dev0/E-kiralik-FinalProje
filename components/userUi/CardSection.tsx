@@ -95,39 +95,41 @@ const CardSection = () => {
           </div>
         </div>
       ) : homes.length ? (
-        <div className="flex flex-wrap gap-4 justify-start lg:ml-9 sm:ml-3 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 lg:ml-8 sm:ml-4">
           {homes.map((home) => (
-            <div className="w-full sm:w-[350px]" key={home._id}>
-              <Card className="w-full">
-                <CardHeader className="flex flex-col justify-between items-center">
-                  <CardTitle>
+            <div key={home._id} className="w-full">
+              <Card className="w-full h-full flex flex-col justify-between bg-white/90 backdrop-blur-md shadow-sm hover:shadow-md transition-shadow duration-300 border border-white/20">
+                <CardHeader className="flex flex-col justify-between items-center p-4">
+                  <CardTitle className="text-lg font-semibold text-gray-800 text-center">
                     {session?.user.isLandlord
                       ? home.tenant_id
-                        ? `kiraci: ${home.tenant_id.username}`
-                        : "hiçbir kiraci yoktur"
-                      : `ev sahbi: ${home.owner_id?.username || "No Owner"}`}
+                        ? `Kiracı: ${home.tenant_id.username}`
+                        : "Kiracı Yok"
+                      : `Ev Sahibi: ${home.owner_id?.username || "No Owner"}`}
                   </CardTitle>
-                  <CardDescription>{home.location}</CardDescription>
+                  <CardDescription className="text-gray-600 mt-1 text-center text-sm">
+                    {home.location}
+                  </CardDescription>
                 </CardHeader>
-                <CardFooter className="flex justify-end">
+                <CardFooter className="flex justify-end p-4">
                   {session?.user.isLandlord ? (
                     home.tenant_id ? (
                       <ShieldAlert
-                        className="text-red-500 cursor-pointer"
-                        size={24}
+                        className="text-red-500 cursor-pointer hover:text-red-600 transition-colors duration-300"
+                        size={20}
                         onClick={() => handleShowModalDetails(home._id)}
                       />
                     ) : (
                       <UserRoundPlus
-                        className="text-green-500 cursor-pointer"
-                        size={24}
+                        className="text-green-500 cursor-pointer hover:text-green-600 transition-colors duration-300"
+                        size={20}
                         onClick={() => handleShowModalForm(home._id)}
                       />
                     )
                   ) : (
                     <ShieldAlert
-                      className="text-red-500 cursor-pointer"
-                      size={24}
+                      className="text-red-500 cursor-pointer hover:text-red-600 transition-colors duration-300"
+                      size={20}
                       onClick={() => handleShowModalDetails(home._id)}
                     />
                   )}
@@ -137,7 +139,9 @@ const CardSection = () => {
           ))}
         </div>
       ) : (
-        <p>No Ev</p>
+        <div className="flex items-center justify-center h-48">
+          <p className="text-gray-600 text-sm">No Ev</p>
+        </div>
       )}
     </>
   );

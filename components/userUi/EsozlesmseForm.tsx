@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ShinyButton from "@/components/ui/shiny-button";
 import { useSession } from "next-auth/react";
 import { client } from "@/sanity/lib/client";
+import { X } from "lucide-react";
 
 interface ESozlesmeFormProps {
   onClose: () => void;
@@ -79,16 +80,16 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-white bg-opacity-80 shadow-2xl rounded-xl max-w-full sm:max-w-3xl w-full p-4 sm:p-8 relative border-4 border-black ">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
+      <div className="bg-white/90 backdrop-blur-lg shadow-2xl rounded-xl max-w-full sm:max-w-3xl w-full p-6 sm:p-8 relative border border-white/20">
         <button
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold"
           onClick={onClose}
+          className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition-colors duration-300"
         >
-          &times;
+          <X size={24} />
         </button>
 
-        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 text-center mb-6 sm:mb-8">
+        <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent text-center mb-6 sm:mb-8">
           E-Sözleşme
         </h2>
 
@@ -103,7 +104,7 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
                 name="kiraciKimligi"
                 value={formData.kiraciKimligi}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md"
                 placeholder="Kimlik bilgisi girin"
                 pattern="[0-9]*"
               />
@@ -118,7 +119,7 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
                 name="girisTarihi"
                 value={formData.girisTarihi}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md"
               />
             </div>
 
@@ -131,7 +132,7 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
                 name="kiraTutari"
                 value={formData.kiraTutari}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md"
                 placeholder="Kira tutarı girin"
                 pattern="[0-9]*"
               />
@@ -146,7 +147,7 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
                 name="komisyonTutari"
                 value={formData.komisyonTutari}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md"
                 placeholder="Komisyon tutarı girin"
                 pattern="[0-9]*"
               />
@@ -161,7 +162,7 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
                 name="sozlesmeSuresi"
                 value={formData.sozlesmeSuresi}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md"
                 placeholder="Ay sayısı girin"
                 pattern="[0-9]*"
               />
@@ -177,12 +178,11 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
                 placeholder="Evet / Hayır"
                 value={formData.evEsyaliMi}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md"
               />
             </div>
           </div>
 
-          {/* textarea */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Anlaşma Koşulları
@@ -192,7 +192,7 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
               value={formData.anlasmaKosullari}
               onChange={handleChange}
               rows={4}
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:shadow-md"
               placeholder="Koşulları girin"
             />
           </div>
