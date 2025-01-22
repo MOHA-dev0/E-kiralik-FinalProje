@@ -56,7 +56,7 @@ Günümüz hızla değişen dünyasında, emlak kiralama sektöründe teknolojik
    - [Node.js](https://nodejs.org/en/) yüklü olduğundan emin olun.
    - Projeyi Git üzerinden indirin veya klonlayın:
      ```bash
-     git clone https://github.com/username/e-Kiralik.git
+     git clone https://github.com/MOHAADEV/E-kiralik-FinalProje.git
      ```
 
 2. **Bağımlılıkları Yükleme**:
@@ -77,11 +77,6 @@ Günümüz hızla değişen dünyasında, emlak kiralama sektöründe teknolojik
 
 Topluluk tarafından projeye katkılar yapılmasını teşvik ediyoruz. Yeni fikirleriniz veya karşılaştığınız bir hata varsa, GitHub üzerinden **Issue** veya **Pull Request** oluşturabilirsiniz.
 
-## 📅 Gelecek Planları
-
-- Elektronik ödeme entegrasyonu eklenmesi.
-- Kiracılar için yeni özellikler, örneğin emlak değerlendirme ve yorum yapma.
-- Kullanıcı arayüzünün daha etkileşimli ve kullanıcı dostu hale getirilmesi.
 
 ## 📧 Bize Ulaşın
 
