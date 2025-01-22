@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+
+// Components
 import {
   Card,
   CardDescription,
@@ -7,17 +10,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import ESozlesmeForm from "@/components/userUi/EsozlesmseForm";
+import ContractDetails from "@/components/userUi/ContractDetails";
+
+// Icons
 import { UserRoundPlus, ShieldAlert } from "lucide-react";
 
+// Sanity
 import { client } from "@/sanity/lib/client";
 import {
   GET_OWNED_HOMES_QUERY,
   GET_RENTED_HOMES_QUERY,
 } from "@/sanity/lib/queries";
-import { useSession } from "next-auth/react";
 
-import ESozlesmeForm from "@/components/userUi/EsozlesmseForm";
-import ContractDetails from "@/components/userUi/ContractDetails";
+// Interfaces
+interface Home {
+  _id: string;
+  owner_id?: {
+    username: string;
+  };
+  tenant_id?: {
+    username: string;
+  };
+  location: string;
+}
 
 const CardSection = () => {
   const params = useParams();
@@ -27,17 +43,6 @@ const CardSection = () => {
   const [showModalForm, setShowModalForm] = useState<boolean>(false);
   const [showModalDetails, setShowModalDetails] = useState<boolean>(false);
   const [selectedHomeId, setSelectedHomeId] = useState<string | null>(null);
-
-  interface Home {
-    _id: string;
-    owner_id?: {
-      username: string;
-    };
-    tenant_id?: {
-      username: string;
-    };
-    location: string;
-  }
 
   useEffect(() => {
     const fetchHomes = async () => {
@@ -51,7 +56,6 @@ const CardSection = () => {
           tenant_id: session?.user.tc,
         });
         setHomes(data);
-        console.log("Fetched Tenant Homes:", data);
       }
       setLoading(false);
     };
@@ -140,7 +144,9 @@ const CardSection = () => {
         </div>
       ) : (
         <div className="flex items-center justify-center h-48">
-          <p className="text-gray-600 text-sm">No Ev</p>
+          <p className="text-gray-600 text-sm">
+            Sizin için kiralık ev bulunamadı.
+          </p>
         </div>
       )}
     </>

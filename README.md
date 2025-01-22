@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# e-Kiralık Mezuniyet projesi
 
-## Getting Started
+**e-Kiralık**, kiracılar ve mal sahipleri arasındaki ilişkileri güvenli ve verimli bir şekilde yönetmeye odaklanan yenilikçi bir platformdur. Kağıt sözleşmeler yerine elektronik sözleşmeler sunarak, gelir istatistikleri, kiralama hatırlatıcıları ve daha fazlasını sağlar. Proje, taraflar arasında hakların korunmasına yardımcı olmayı hedefler.
 
-First, run the development server:
+## 📚 Proje Tanıtımı
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Günümüz hızla değişen dünyasında, emlak kiralama sektöründe teknolojik çözümlere olan ihtiyaç her geçen gün artmaktadır. Bu proje, kiralama süreçlerini daha verimli ve güvenli hale getirmek için teknolojiyi kullanmaktadır.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**e-Kiralık** projesinin hedefleri şunlardır:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Kağıt sözleşmelerin yerine elektronik kiralama sözleşmeleri sağlamak.
+- Mal sahiplerine gelirlerini doğru bir şekilde takip etme imkanı sunmak.
+- Kiracılara kira ödemeleri için hatırlatmalar göndermek.
+- Kiralama işlemlerinin yönetimini kolaylaştırarak tarafların haklarını güvence altına almak.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚙️ Kullanılan Teknolojiler
 
-## Learn More
+- **Frontend (Ön Yüz)**:
 
-To learn more about Next.js, take a look at the following resources:
+  - **Next.js** (v15)
+  - **ShadCN**
+  - **Tailwindcss**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Backend (Arka Yüz)**:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  - **Node.js** ve **Express**
 
-## Deploy on Vercel
+- **Veritabanı**:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  - **Sanity** (Veri depolamak için)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Kimlik Doğrulama**:
+  - **NextAuth.js**
+
+## 🛠️ Proje Özellikleri
+
+1. **Güvenilir Elektronik Sözleşmeler**:
+
+   - Kiracı ve mal sahibinin dijital imzası ile elektronik kiralama sözleşmesi.
+
+2. **Detaylı Gelir İstatistikleri**:
+
+   - Mal sahiplerine kiralama gelirlerini grafikler ile gösteren istatistikler.
+
+3. **Kira Ödeme Hatırlatıcıları**:
+
+   - Kiracılara otomatik olarak kira ödeme hatırlatmaları gönderilir.
+
+4. **Güvenlik ve Güvenilirlik**:
+   - Elektronik sözleşmeler ve dijital imza sayesinde tarafların hakları güvence altına alınır.
+
+## 📑 Kullanım Talimatları
+
+1. **Kurulum**:
+
+   - [Node.js](https://nodejs.org/en/) yüklü olduğundan emin olun.
+   - Projeyi Git üzerinden indirin veya klonlayın:
+     ```bash
+     git clone https://github.com/username/e-Kiralik.git
+     ```
+
+2. **Bağımlılıkları Yükleme**:
+
+   - Proje dizininde gerekli bağımlılıkları yükleyin:
+     ```bash
+     npm install
+     ```
+
+3. **Proje Başlatma**:
+   - Yerel ortamda projeyi çalıştırmak için:
+     ```bash
+     npm run dev
+     ```
+   - Proje, [http://localhost:3000](http://localhost:3000) adresinde çalışacaktır.
+
+## 🤝 Katkı Sağlama
+
+Topluluk tarafından projeye katkılar yapılmasını teşvik ediyoruz. Yeni fikirleriniz veya karşılaştığınız bir hata varsa, GitHub üzerinden **Issue** veya **Pull Request** oluşturabilirsiniz.
+
+## 📅 Gelecek Planları
+
+- Elektronik ödeme entegrasyonu eklenmesi.
+- Kiracılar için yeni özellikler, örneğin emlak değerlendirme ve yorum yapma.
+- Kullanıcı arayüzünün daha etkileşimli ve kullanıcı dostu hale getirilmesi.
+
+## 📧 Bize Ulaşın
+
+Yardım veya sorularınız için bizimle iletişime geçmekten çekinmeyin. E-posta adresimiz üzerinden veya GitHub projesi üzerinden ulaşabilirsiniz.
+
+mohammad.uns.02@gmail.com

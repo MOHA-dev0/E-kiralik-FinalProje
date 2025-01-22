@@ -19,7 +19,7 @@ const SignInPage = () => {
     });
 
     if (res?.error) {
-      setError("Invalid TC or password.");
+      setError("Geçersiz TC veya şifre..");
     } else if (res?.ok) {
       router.push("/");
     }

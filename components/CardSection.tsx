@@ -1,18 +1,13 @@
 import React from "react";
 
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-
 const CardSection = () => {
   return (
     <div>
       <section className="bg-gradient-to-br from-gray-50 to-gray-100 py-24">
         <div className="max-w-7xl mx-auto px-6">
-          {/* Header with glowing effect */}
           <div className="flex justify-center items-center mb-20">
             <div className="relative">
-              {/* Glowing gradient background */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-400 rounded-full w-36 h-36 opacity-20 blur-2xl animate-pulse"></div>
-              {/* Content */}
               <div className="relative z-10 text-center">
                 <h2 className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
                   Sizin için Tasarlandı
@@ -24,9 +19,7 @@ const CardSection = () => {
             </div>
           </div>
 
-          {/* Cards with glass morphism and hover effects */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Card 1 */}
             <div className="relative bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 overflow-hidden group border border-white/20">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-green-300 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
               <div className="p-6 relative z-10">
@@ -40,7 +33,6 @@ const CardSection = () => {
               </div>
             </div>
 
-            {/* Card 2 */}
             <div className="relative bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 overflow-hidden group border border-white/20">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-green-300 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
               <div className="p-6 relative z-10">
@@ -54,7 +46,6 @@ const CardSection = () => {
               </div>
             </div>
 
-            {/* Card 3 */}
             <div className="relative bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 overflow-hidden group border border-white/20">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-green-300 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
               <div className="p-6 relative z-10">
@@ -68,7 +59,6 @@ const CardSection = () => {
               </div>
             </div>
 
-            {/* Card 4 */}
             <div className="relative bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 overflow-hidden group border border-white/20">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-green-300 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
               <div className="p-6 relative z-10">

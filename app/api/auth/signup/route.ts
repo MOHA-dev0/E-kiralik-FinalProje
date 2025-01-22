@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sanityClient } from "@/sanity/lib/sanity";
+import { GET_EMAIL_IF_ALEADY_EXIST } from "@/sanity/lib/queries";
 
 export async function POST(req: NextRequest) {
   try {
     const { username, email, password, tc } = await req.json();
 
-    const existingUser = await sanityClient.fetch(
-      `*[_type == "user" && email == $email][0]`,
-      { email }
-    );
+    const existingUser = await sanityClient.fetch(GET_EMAIL_IF_ALEADY_EXIST, {
+      email,
+    });
 
     if (existingUser) {
       return NextResponse.json(

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import ShinyButton from "@/components/ui/shiny-button";
 import { useSession } from "next-auth/react";
-import { client } from "@/sanity/lib/client";
 import { X } from "lucide-react";
+
+//sanity
+import { client } from "@/sanity/lib/client";
+import { GET_USER_BY_TC } from "@/sanity/lib/queries";
 
 interface ESozlesmeFormProps {
   onClose: () => void;
@@ -37,7 +40,7 @@ const ESozlesmeForm: React.FC<ESozlesmeFormProps> = ({ onClose, homeId }) => {
       return;
     }
 
-    const kiraci = await client.fetch(`*[_type == "user" && tc == $tc][0]`, {
+    const kiraci = await client.fetch(GET_USER_BY_TC, {
       tc: formData.kiraciKimligi,
     });
 

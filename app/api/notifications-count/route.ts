@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { writeClient } from "@/sanity/lib/write-clinet";
+import { GET_STATUS_BY_ID } from "@/sanity/lib/queries";
 
 export async function GET(req: Request) {
   try {
@@ -13,14 +14,9 @@ export async function GET(req: Request) {
       );
     }
 
-    const notifications = await writeClient.fetch(
-      `*[_type == "user" && tc == $id][0]{
-        notifications[] {
-          status
-        }
-      }`,
-      { id: userId }
-    );
+    const notifications = await writeClient.fetch(GET_STATUS_BY_ID, {
+      id: userId,
+    });
 
     const unreadCount = (notifications?.notifications || []).filter(
       (notif: any) => notif.status !== "read"

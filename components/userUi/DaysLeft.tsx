@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button"; // استيراد Button من shadcn/ui
+import { Button } from "@/components/ui/button";
 
 interface DaysLeftProps {
   onClose: () => void;
@@ -73,7 +73,6 @@ const DaysLeft: React.FC<DaysLeftProps> = ({ onClose, tenantId }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <div className="bg-white p-8 rounded-xl shadow-2xl max-w-md w-full relative border border-gray-200">
-        {/* زر الإغلاق */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors duration-300"
@@ -94,12 +93,10 @@ const DaysLeft: React.FC<DaysLeftProps> = ({ onClose, tenantId }) => {
           </svg>
         </button>
 
-        {/* العنوان مع التدرج اللوني */}
         <h2 className="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent">
           Ödeme için kalan gün sayısı
         </h2>
 
-        {/* المحتوى */}
         {loading ? (
           <p className="text-gray-700 text-center">Veriler yükleniyor...</p>
         ) : error ? (
@@ -109,11 +106,9 @@ const DaysLeft: React.FC<DaysLeftProps> = ({ onClose, tenantId }) => {
             <div className="flex items-center justify-center space-x-4">
               {Object.entries(timeLeft).map(([unit, value]) => (
                 <div key={unit} className="text-center">
-                  {/* العداد مع حركة خفيفة */}
                   <div className="bg-gradient-to-r from-blue-500 to-green-400 text-white font-bold text-4xl p-6 rounded-lg shadow-md hover:scale-105 transition-transform ">
                     {String(value).padStart(2, "0")}
                   </div>
-                  {/* الوحدة الزمنية */}
                   <div className="text-gray-600 mt-2 uppercase text-sm">
                     {unit === "days"
                       ? "Günler"
@@ -127,7 +122,6 @@ const DaysLeft: React.FC<DaysLeftProps> = ({ onClose, tenantId }) => {
               ))}
             </div>
 
-            {/* زر Öde */}
             <div className="mt-6 flex justify-center">
               <Button className="bg-gradient-to-r from-blue-500 to-green-400 text-white font-semibold py-2 px-6 rounded-lg hover:from-blue-600 hover:to-green-500 transition-all duration-300">
                 Öde

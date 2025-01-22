@@ -1,9 +1,16 @@
-import { signOut, useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
+
+// Components
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback } from "./ui/avatar";
-import logo from "@/public/logo.png";
+import Notifications from "./userUi/Notifications";
+import DaysLeft from "./userUi/DaysLeft";
+
+// Icons
 import {
   Bell,
   LogOut,
@@ -13,16 +20,17 @@ import {
   LogIn,
   CirclePlus,
 } from "lucide-react";
+
+// UI Library (Radix)
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import Notifications from "./userUi/Notifications";
-import DaysLeft from "./userUi/DaysLeft";
+
+// Assets
+import logo from "@/public/logo.png";
 
 function Navbar() {
   const { data: session } = useSession();
@@ -64,7 +72,6 @@ function Navbar() {
   const handleSignOut = async () => {
     await signOut({ redirect: false });
     router.push("/");
-    console.log("Signed out");
   };
 
   const openDaysLeftModal = () => setIsDaysLeftModalOpen(true);
@@ -89,18 +96,10 @@ function Navbar() {
         <ul className="hidden md:flex gap-7 text-gray-700 font-semibold justify-center">
           <li>
             <Link
-              href="#Header"
+              href="/"
               className="cursor-pointer transition-colors duration-300 hover:text-gray-500"
             >
               Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="#Contact"
-              className="cursor-pointer transition-colors duration-300 hover:text-gray-500"
-            >
-              Contact Us
             </Link>
           </li>
         </ul>
@@ -159,7 +158,7 @@ function Navbar() {
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="group flex items-center p-3 hover:bg-green-100 transition-all duration-300 rounded-lg"
-                    onClick={openDaysLeftModal} // فتح المودال عند النقر
+                    onClick={openDaysLeftModal}
                   >
                     <span className="ml-4 text-gray-800 group-hover:text-green-600 font-medium">
                       Settings
@@ -219,7 +218,10 @@ function Navbar() {
                 </button>
               </li>
               <li>
-                <button className="flex items-center gap-2">
+                <button
+                  onClick={openDaysLeftModal}
+                  className="flex items-center gap-2"
+                >
                   <Settings className="w-5 h-5" />
                 </button>
               </li>

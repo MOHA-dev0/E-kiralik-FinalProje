@@ -1,6 +1,9 @@
 import { useSession } from "next-auth/react";
-import { client } from "@/sanity/lib/client";
 import { useEffect, useState } from "react";
+
+//sanity
+import { client } from "@/sanity/lib/client";
+import { GET_NOTIFICATIONS_BY_USER_ID } from "@/sanity/lib/queries";
 
 const Notifications = ({
   setNotificationCount,
@@ -27,14 +30,13 @@ const Notifications = ({
     if (session) {
       const fetchNotifications = async () => {
         try {
-          const data = await client.fetch(
-            `*[_type == "user" && _id == $id][0].notifications`,
-            { id: session.user.id }
-          );
+          const data = await client.fetch(GET_NOTIFICATIONS_BY_USER_ID, {
+            id: session.user.id,
+          });
           const unreadNotifications = (data || []).filter(
             (notif: Notification) => notif.status !== "read"
           );
-          setNotificationCount(unreadNotifications.length); // تحديث العدد في المكون الأب
+          setNotificationCount(unreadNotifications.length);
           setNotifications(unreadNotifications);
         } catch (error) {
           console.error("Error fetching notifications:", error);
@@ -63,7 +65,6 @@ const Notifications = ({
           setNotifications((prevNotifications) =>
             prevNotifications.filter((notif) => notif.idhome !== idhome)
           );
-          alert("تم تحديث حالة الإشعار بنجاح!"); // رسالة تأكيد
         } else {
           console.error("Failed to update notification status");
         }

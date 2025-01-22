@@ -19,6 +19,12 @@ const SignupPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (formData.tc.length !== 11 || !/^\d+$/.test(formData.tc)) {
+      setError("TC Kimlik Numarası 11 haneli olmalıdır.");
+      return;
+    }
+
     const response = await fetch("/api/auth/signup", {
       method: "POST",
       headers: {
@@ -31,7 +37,7 @@ const SignupPage = () => {
       router.push("/auth/signin");
     } else {
       const data = await response.json();
-      setError(data.error || "Feild to create account");
+      setError(data.error || "Failed to create account");
     }
   };
 
@@ -116,6 +122,7 @@ const SignupPage = () => {
             required
             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
             placeholder="TC kimlik numaranızı girin"
+            maxLength={11} // تحديد الطول الأقصى لـ TC Kimlik Numarası
           />
         </div>
         <button

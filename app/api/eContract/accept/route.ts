@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sanityClient } from "@/sanity/lib/sanity";
+import { GET_USER_BY_TC } from "@/sanity/lib/queries";
 
 export async function POST(req: Request) {
   try {
@@ -13,12 +14,10 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    console.log(homeId);
 
-    const tenant = await sanityClient.fetch(
-      `*[_type == "user" && tc == $tc][0]`,
-      { tc: kiraciKimligi }
-    );
+    const tenant = await sanityClient.fetch(GET_USER_BY_TC, {
+      tc: kiraciKimligi,
+    });
 
     if (!tenant) {
       return NextResponse.json(

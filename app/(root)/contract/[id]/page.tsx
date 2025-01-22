@@ -1,4 +1,5 @@
 "use client";
+
 import { useSession } from "next-auth/react";
 import { client } from "@/sanity/lib/client";
 import { useEffect, useState } from "react";
@@ -10,23 +11,77 @@ import Link from "next/link";
 
 const ContractDetails = () => {
   const { data: session } = useSession();
-  const [contract, setContract] = useState<any>(null);
   const { id } = useParams();
-  const [isChecked, setIsChecked] = useState(false);
   const router = useRouter();
+
+  const [contract, setContract] = useState<any>(null);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (id && session) {
       const fetchContract = async () => {
-        const data = await client.fetch(GET_ECONTRACTS_QUERY, { id });
-        setContract(data);
+        setIsLoading(true);
+        try {
+          const data = await client.fetch(GET_ECONTRACTS_QUERY, { id });
+          setContract(data);
+        } catch (error) {
+          console.error("Error fetching contract:", error);
+          alert("Sözleşme bilgileri alınırken bir hata oluştu.");
+        } finally {
+          setIsLoading(false);
+        }
       };
 
       fetchContract();
     }
   }, [id, session]);
 
-  if (!contract)
+  const handleCheckboxChange = (checked: boolean) => {
+    setIsChecked(checked);
+  };
+
+  const handleAcceptContract = async () => {
+    if (!isChecked) {
+      alert("Lütfen sözleşme şartlarını kabul edin.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      if (!session?.user?.tc || !contract?._id || !contract?.home_id?._id) {
+        console.error("Missing required data for contract acceptance");
+        return;
+      }
+
+      const response = await fetch("/api/eContract/accept", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          kiraciKimligi: session.user.tc,
+          contractId: contract._id,
+          homeId: contract.home_id?._id,
+        }),
+      });
+
+      const result = await response.json();
+      if (response.ok && result.message) {
+        alert("Sözleşme başarıyla kabul edildi.");
+        router.push("/");
+      } else {
+        console.log("Error response:", result);
+      }
+    } catch (error) {
+      console.error("Error during contract acceptance:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!contract) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
         <div className="relative inline-flex">
@@ -36,53 +91,8 @@ const ContractDetails = () => {
         </div>
       </div>
     );
+  }
 
-  const handleCheckboxChange = (checked: boolean) => {
-    setIsChecked(checked);
-  };
-
-  const handleAcceptContract = async () => {
-    if (isChecked) {
-      if (!session?.user?.tc || !contract?._id || !contract?.home_id?._id) {
-        console.error(
-          "Missing required data for contract acceptance",
-          session?.user?.tc,
-          contract?._id,
-          contract?.home_id?._id
-        );
-        alert("Bir hata oluştu. Lütfen tekrar deneyin.");
-        return;
-      }
-
-      try {
-        const response = await fetch("/api/eContract/accept", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            kiraciKimligi: session.user.tc,
-            contractId: contract._id,
-            homeId: contract.home_id?._id,
-          }),
-        });
-
-        const result = await response.json();
-        if (response.ok && result.message) {
-          alert("Sözleşme başarıyla kabul edildi.");
-          router.push("/");
-        } else {
-          console.log("Error response:", result);
-          alert("Bir hata oluştu. Lütfen tekrar deneyin.");
-        }
-      } catch (error) {
-        console.error("Error during contract acceptance:", error);
-        alert("Bir hata oluştu. Lütfen tekrar deneyin.");
-      }
-    } else {
-      alert("Lütfen sözleşme şartlarını kabul edin.");
-    }
-  };
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
       <div className="bg-white/90 backdrop-blur-lg shadow-2xl rounded-xl max-w-full sm:max-w-3xl w-full p-6 sm:p-8 relative border border-white/20">
@@ -165,35 +175,33 @@ const ContractDetails = () => {
               htmlFor="terms1"
               className="text-sm font-medium leading-none"
             >
-              Accept terms and conditions
+              Şartları ve koşulları kabul ediyorum
             </label>
             <p className="text-sm text-muted-foreground">
-              You agree to our{" "}
               <Link
                 href="/terms-and-privacy"
                 className="text-blue-500 hover:text-blue-600 underline"
               >
-                Terms of Service
+                Hizmet Şartları
               </Link>{" "}
-              and{" "}
+              ve{" "}
               <Link
                 href="/terms-and-privacy"
                 className="text-blue-500 hover:text-blue-600 underline"
               >
-                Privacy Policy
+                Gizlilik Politikası
               </Link>
-              .
+              'nı kabul ediyorum.
             </p>
           </div>
         </div>
 
         <ShinyButton
-          disabled={!isChecked}
+          disabled={!isChecked || isLoading}
           onClick={handleAcceptContract}
-          type="submit"
           className="text-white bg-white px-5 py-5 w-[200px] flex justify-center items-center mx-auto mt-8 disabled:opacity-50"
         >
-          Kabul Ediyorum
+          {isLoading ? "İşleniyor..." : "Kabul Ediyorum"}
         </ShinyButton>
       </div>
     </div>

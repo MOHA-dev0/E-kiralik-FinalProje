@@ -1,10 +1,14 @@
 "use client";
-import { useSession } from "next-auth/react";
-import { client } from "@/sanity/lib/client";
+
 import { useEffect, useState } from "react";
-import { GET_ECONTRACTS_BY_HOMEID_QUERY } from "@/sanity/lib/queries";
+import { useSession } from "next-auth/react";
 import { X } from "lucide-react";
 
+// Sanity
+import { client } from "@/sanity/lib/client";
+import { GET_ECONTRACTS_BY_HOMEID_QUERY } from "@/sanity/lib/queries";
+
+// Interfaces
 interface ContractDetailsProps {
   id: string;
   onClose: () => void;
@@ -21,7 +25,6 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({ id, onClose }) => {
           const data = await client.fetch(GET_ECONTRACTS_BY_HOMEID_QUERY, {
             id,
           });
-          console.log("Fetched Contract Data:", data);
           setContract(data[0]);
         } catch (error) {
           console.error("Error fetching contract data:", error);

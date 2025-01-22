@@ -1,5 +1,8 @@
-import { sanityClient } from "@/sanity/lib/sanity";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+// sanity
+import { sanityClient } from "@/sanity/lib/sanity";
+import { GET_LOGIN_USER_INFO } from "@/sanity/lib/queries";
 
 export const authOptions = {
   providers: [
@@ -10,13 +13,10 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const user = await sanityClient.fetch(
-          `*[_type == "user" && tc == $tc && password == $password][0]`,
-          {
-            tc: credentials?.tc,
-            password: credentials?.password,
-          }
-        );
+        const user = await sanityClient.fetch(GET_LOGIN_USER_INFO, {
+          tc: credentials?.tc,
+          password: credentials?.password,
+        });
 
         if (user) {
           return {

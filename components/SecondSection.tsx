@@ -9,7 +9,6 @@ const SecondSection = () => {
   return (
     <section className="bg-gradient-to-br from-gray-50 to-gray-100 py-12 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header with glowing effect */}
         <div className="flex justify-center items-center mb-12 md:mb-16 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-400 rounded-full w-48 h-48 md:w-80 md:h-80 opacity-20 blur-2xl animate-pulse"></div>
           <div className="relative z-10 text-center">
@@ -23,7 +22,6 @@ const SecondSection = () => {
           </div>
         </div>
 
-        {/* Tab buttons with glass morphism and hover effects */}
         <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-8 md:mb-12">
           <Button
             variant={activeTab === 1 ? "default" : "outline"}
@@ -41,11 +39,9 @@ const SecondSection = () => {
           </Button>
         </div>
 
-        {/* Steps container with glass morphism and hover effects */}
         <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-2xl p-6 md:p-8 max-w-6xl w-full transform transition-all hover:scale-105 mx-auto border border-white/20">
           {activeTab === 1 ? (
             <div className="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8 rtl:space-x-reverse">
-              {/* Step 1 */}
               <div className="flex flex-col items-center">
                 <div className="relative flex items-center justify-center w-16 h-16 md:w-24 md:h-24 bg-white/90 backdrop-blur-md border-2 border-white/30 rounded-full shadow-lg animate__animated animate__fadeIn animate__delay-1s">
                   <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
@@ -58,7 +54,6 @@ const SecondSection = () => {
               </div>
               <div className="w-16 h-px md:w-24 md:h-px border-dashed border-t-2 border-gray-300"></div>
 
-              {/* Step 2 */}
               <div className="flex flex-col items-center">
                 <div className="relative flex items-center justify-center w-16 h-16 md:w-24 md:h-24 bg-white/90 backdrop-blur-md border-2 border-white/30 rounded-full shadow-lg animate__animated animate__fadeIn animate__delay-2s">
                   <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
@@ -71,7 +66,6 @@ const SecondSection = () => {
               </div>
               <div className="w-16 h-px md:w-24 md:h-px border-dashed border-t-2 border-gray-300"></div>
 
-              {/* Step 3 */}
               <div className="flex flex-col items-center">
                 <div className="relative flex items-center justify-center w-16 h-16 md:w-24 md:h-24 bg-white/90 backdrop-blur-md border-2 border-white/30 rounded-full shadow-lg animate__animated animate__fadeIn animate__delay-3s">
                   <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
@@ -85,7 +79,6 @@ const SecondSection = () => {
             </div>
           ) : (
             <div className="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8 rtl:space-x-reverse">
-              {/* Step 1 */}
               <div className="flex flex-col items-center">
                 <div className="relative flex items-center justify-center w-16 h-16 md:w-24 md:h-24 bg-white/90 backdrop-blur-md border-2 border-white/30 rounded-full shadow-lg animate__animated animate__fadeIn animate__delay-1s">
                   <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
@@ -98,7 +91,6 @@ const SecondSection = () => {
               </div>
               <div className="w-16 h-px md:w-24 md:h-px border-dashed border-t-2 border-gray-300"></div>
 
-              {/* Step 2 */}
               <div className="flex flex-col items-center">
                 <div className="relative flex items-center justify-center w-16 h-16 md:w-24 md:h-24 bg-white/90 backdrop-blur-md border-2 border-white/30 rounded-full shadow-lg animate__animated animate__fadeIn animate__delay-2s">
                   <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
@@ -112,7 +104,6 @@ const SecondSection = () => {
               </div>
               <div className="w-16 h-px md:w-24 md:h-px border-dashed border-t-2 border-gray-300"></div>
 
-              {/* Step 3 */}
               <div className="flex flex-col items-center">
                 <div className="relative flex items-center justify-center w-16 h-16 md:w-24 md:h-24 bg-white/90 backdrop-blur-md border-2 border-white/30 rounded-full shadow-lg animate__animated animate__fadeIn animate__delay-3s">
                   <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">

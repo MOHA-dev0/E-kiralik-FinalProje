@@ -4,7 +4,6 @@ import { GET_DATE_BY_ID_OF_TANANT } from "@/sanity/lib/queries";
 
 export async function GET(req: NextRequest) {
   try {
-    // استخراج tenant_id من query
     const { searchParams } = new URL(req.url);
     const tenantId = searchParams.get("tenant_id");
 

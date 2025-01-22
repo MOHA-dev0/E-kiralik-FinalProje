@@ -1,10 +1,11 @@
+import { GET_BY_ID } from "@/sanity/lib/queries";
 import { writeClient } from "@/sanity/lib/write-clinet";
 
 export async function PATCH(req: Request) {
   const { idhome, userId } = await req.json();
 
   try {
-    const userDoc = await writeClient.fetch("*[_id == $userId][0]", { userId });
+    const userDoc = await writeClient.fetch(GET_BY_ID, { userId });
 
     if (!userDoc) {
       return new Response(JSON.stringify({ error: "User not found" }), {
