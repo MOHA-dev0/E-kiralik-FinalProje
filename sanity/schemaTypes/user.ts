@@ -80,7 +80,7 @@ export default {
         Rule.regex(/^\d{11}$/, {
           name: "TC Number",
           invert: false,
-          message: "TC يجب أن يحتوي على 11 رقماً فقط.",
+          message: "TC 11 rakamdan oluşmalıdır",
         }),
     },
   ],

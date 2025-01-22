@@ -1,10 +1,18 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback } from "./ui/avatar";
 import logo from "@/public/logo.png";
-import { Bell, LogOut, Menu, Settings, User, LogIn } from "lucide-react";
+import {
+  Bell,
+  LogOut,
+  Menu,
+  Settings,
+  User,
+  LogIn,
+  CirclePlus,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -14,6 +22,7 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Notifications from "./userUi/Notifications";
+import DaysLeft from "./userUi/DaysLeft";
 
 function Navbar() {
   const { data: session } = useSession();
@@ -22,12 +31,13 @@ function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
+  const [isDaysLeftModalOpen, setIsDaysLeftModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchNotificationCount = async () => {
       try {
         if (!session) return;
-        const userId = session?.user.tc; // استبدل بـ ID المستخدم الحالي
+        const userId = session?.user.tc;
         const response = await fetch(
           `/api/notifications-count?userId=${userId}`
         );
@@ -57,9 +67,12 @@ function Navbar() {
     console.log("Signed out");
   };
 
+  const openDaysLeftModal = () => setIsDaysLeftModalOpen(true);
+  const closeDaysLeftModal = () => setIsDaysLeftModalOpen(false);
+
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md h-[75px] sm:h-24">
-      <div className="container mx-auto flex justify-around items-center py-0 px-4 md:px-6">
+      <div className="container mx-auto flex justify-between items-center py-0 px-4 md:px-6">
         {/* Logo */}
         <div className="relative w-[100px] aspect-square">
           <Link href="/">
@@ -118,7 +131,7 @@ function Navbar() {
                   setIsDropdownOpen(open);
                   if (open) setIsNotificationsOpen(false);
                 }}
-                modal={false} // إضافة هذه الخاصية لمنع تعطيل التمرير
+                modal={false}
               >
                 <DropdownMenuTrigger asChild>
                   <div>
@@ -144,7 +157,10 @@ function Navbar() {
                       Profile
                     </a>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="group flex items-center p-3 hover:bg-green-100 transition-all duration-300 rounded-lg">
+                  <DropdownMenuItem
+                    className="group flex items-center p-3 hover:bg-green-100 transition-all duration-300 rounded-lg"
+                    onClick={openDaysLeftModal} // فتح المودال عند النقر
+                  >
                     <span className="ml-4 text-gray-800 group-hover:text-green-600 font-medium">
                       Settings
                     </span>
@@ -224,6 +240,9 @@ function Navbar() {
               >
                 <LogIn />
               </Link>
+              <Link href="/auth/signup">
+                <CirclePlus />
+              </Link>
             </div>
           )}
         </div>
@@ -231,6 +250,13 @@ function Navbar() {
 
       {isNotificationsOpen && (
         <Notifications setNotificationCount={setNotificationCount} />
+      )}
+
+      {isDaysLeftModalOpen && (
+        <DaysLeft
+          onClose={closeDaysLeftModal}
+          tenantId={session?.user.id || ""}
+        />
       )}
     </nav>
   );

@@ -65,3 +65,8 @@ export const GET_ECONTRACTS_BY_HOMEID_QUERY = defineQuery(`
 
 }
 `);
+
+export const GET_DATE_BY_ID_OF_TANANT = defineQuery(`
+  *[_type == "eContract" && tenant_id._ref == $id][0]{
+  girisTarihi
+}`);

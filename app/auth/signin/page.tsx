@@ -74,7 +74,7 @@ const SignInPage = () => {
           type="submit"
           className="w-full bg-gradient-to-r from-blue-500 to-green-400 text-white py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-green-500 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
         >
-          Sign In
+          Giriş Yap
         </button>
       </form>
     </div>
