@@ -26,14 +26,25 @@ const SecondSection = () => {
           <Button
             variant={activeTab === 1 ? "default" : "outline"}
             onClick={() => setActiveTab(1)}
-            className="w-full sm:w-auto transition-all transform hover:scale-105 text-sm md:text-base font-semibold py-2 px-4 bg-white/80 backdrop-blur-lg shadow-lg border border-white/20 hover:bg-white/90 hover:shadow-xl text-gray-800 hover:text-gray-900 active:text-white"
+            className={`w-full sm:w-auto transition-all transform text-sm md:text-base font-semibold py-2 px-4 backdrop-blur-lg shadow-lg border 
+    ${
+      activeTab === 1
+        ? "bg-blue-100 shadow-xl text-blue-800 scale-105 border-blue-300 font-bold"
+        : "bg-white/80 hover:bg-white/90 hover:shadow-xl hover:scale-105 text-gray-600  border-white/20"
+    }`}
           >
             Kiracı için
           </Button>
+
           <Button
             variant={activeTab === 2 ? "default" : "outline"}
             onClick={() => setActiveTab(2)}
-            className="w-full sm:w-auto transition-all transform hover:scale-105 text-sm md:text-base font-semibold py-2 px-4 bg-white/80 backdrop-blur-lg shadow-lg border border-white/20 hover:bg-white/90 hover:shadow-xl text-gray-800 hover:text-gray-900 active:text-white"
+            className={`w-full sm:w-auto transition-all transform text-sm md:text-base font-semibold py-2 px-4 backdrop-blur-lg shadow-lg border 
+    ${
+      activeTab === 2
+        ? "bg-blue-100 shadow-xl text-blue-800 scale-105 border-blue-300 font-bold"
+        : "bg-white/80 hover:bg-white/90 hover:shadow-xl hover:scale-105 text-gray-600  border-white/20"
+    }`}
           >
             Ev Sahibi için
           </Button>
