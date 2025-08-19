@@ -23,20 +23,30 @@ const SecondSection = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-8 md:mb-12">
-          <Button
-            variant={activeTab === 1 ? "default" : "outline"}
-            onClick={() => setActiveTab(1)}
-            className="w-full sm:w-auto transition-all transform hover:scale-105 text-sm md:text-base font-semibold py-2 px-4 bg-white/80 backdrop-blur-lg shadow-lg border border-white/20 hover:bg-white/90 hover:shadow-xl text-gray-800 hover:text-gray-900 active:text-white"
-          >
-            Kiracı için
-          </Button>
-          <Button
-            variant={activeTab === 2 ? "default" : "outline"}
-            onClick={() => setActiveTab(2)}
-            className="w-full sm:w-auto transition-all transform hover:scale-105 text-sm md:text-base font-semibold py-2 px-4 bg-white/80 backdrop-blur-lg shadow-lg border border-white/20 hover:bg-white/90 hover:shadow-xl text-gray-800 hover:text-gray-900 active:text-white"
-          >
-            Ev Sahibi için
-          </Button>
+         <Button
+  variant={activeTab === 1 ? "default" : "outline"}
+  onClick={() => setActiveTab(1)}
+  className={`w-full sm:w-auto transition-all transform text-sm md:text-base font-semibold py-2 px-4 backdrop-blur-lg shadow-lg border 
+    ${activeTab === 1 
+      ? "bg-white/90 shadow-xl text-gray-900 scale-105 border-white/30" 
+      : "bg-white/80 hover:bg-white/90 hover:shadow-xl hover:scale-105 text-gray-800 hover:text-gray-900 border-white/20"
+    }`}
+>
+  Kiracı için
+</Button>
+
+<Button
+  variant={activeTab === 2 ? "default" : "outline"}
+  onClick={() => setActiveTab(2)}
+  className={`w-full sm:w-auto transition-all transform text-sm md:text-base font-semibold py-2 px-4 backdrop-blur-lg shadow-lg border 
+    ${activeTab === 2 
+      ? "bg-white/90 shadow-xl text-gray-900 scale-105 border-white/30" 
+      : "bg-white/80 hover:bg-white/90 hover:shadow-xl hover:scale-105 text-gray-800 hover:text-gray-900 border-white/20"
+    }`}
+>
+  Ev Sahibi için
+</Button>
+
         </div>
 
         <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-2xl p-6 md:p-8 max-w-6xl w-full transform transition-all hover:scale-105 mx-auto border border-white/20">
